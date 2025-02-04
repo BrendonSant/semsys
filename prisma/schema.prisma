@@ -18,6 +18,7 @@ model Custumer {
   name      String
   phone     String
   email     String
+  img       String
   address   String?
   document  String
   create_at DateTime? @default(now())
@@ -56,20 +57,13 @@ model Supplier {
   email     String
   document  String
   address   String?
-  typeId    String?       @db.ObjectId
-  type      TypeSupplier? @relation(fields: [typeId], references: [id])
   create_at DateTime?     @default(now())
   update_at DateTime?     @default(now())
 
   ticket Ticket[]
 }
 
-model TypeSupplier {
-  id   String @id @default(auto()) @map("_id") @db.ObjectId
-  name String
 
-  supplier Supplier[]
-}
 
 model Product {
   id    String @id @default(auto()) @map("_id") @db.ObjectId
