@@ -13,36 +13,102 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Account {
-  id                 String  @id @default(auto()) @map("_id") @db.ObjectId
-  userId             String  @db.ObjectId
-  type               String
-  provider           String
-  providerAccountId  String  @map("provider_account_id")
-  refresh_token      String? @db.String
-  access_token       String? @db.String
-  expires_at         Int?
-  token_type         String?
-  scope              String?
-  id_token           String? @db.String
-  session_state      String?
- 
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
- 
-  @@unique([provider, providerAccountId])
-  
+model Custumer {
+  id        String    @id @default(auto()) @map("_id") @db.ObjectId
+  name      String
+  phone     String
+  email     String
+  address   String?
+  document  String
+  create_at DateTime? @default(now())
+  update_at DateTime? @default(now())
+
+  ticket Ticket[]
 }
- 
+
+model Ticket {
+  id           String    @id @default(auto()) @map("_id") @db.ObjectId
+  name         String
+  description  String
+  status       String
+  create_at    DateTime? @default(now())
+  update_at    DateTime? @default(now())
+  serviceprice String
+  total        String
+
+  customerId String?   @db.ObjectId
+  customer   Custumer? @relation(fields: [customerId], references: [id])
+
+  supplierId String?   @db.ObjectId
+  supplier   Supplier? @relation(fields: [supplierId], references: [id])
+
+  productId String?  @db.ObjectId
+  product   Product? @relation(fields: [productId], references: [id])
+
+  accountId String?  @db.ObjectId
+  account   Account? @relation(fields: [accountId], references: [id])
+}
+
+model Supplier {
+  id        String        @id @default(auto()) @map("_id") @db.ObjectId
+  name      String
+  phone     String
+  email     String
+  document  String
+  address   String?
+  typeId    String?       @db.ObjectId
+  type      TypeSupplier? @relation(fields: [typeId], references: [id])
+  create_at DateTime?     @default(now())
+  update_at DateTime?     @default(now())
+
+  ticket Ticket[]
+}
+
+model TypeSupplier {
+  id   String @id @default(auto()) @map("_id") @db.ObjectId
+  name String
+
+  supplier Supplier[]
+}
+
+model Product {
+  id    String @id @default(auto()) @map("_id") @db.ObjectId
+  name  String
+  price String
+
+  ticket Ticket[]
+}
+
+//----------------------------------------------------------------------------------
+model Account {
+  id                String  @id @default(auto()) @map("_id") @db.ObjectId
+  userId            String  @db.ObjectId
+  type              String
+  provider          String
+  providerAccountId String  @map("provider_account_id")
+  refresh_token     String? @db.String
+  access_token      String? @db.String
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.String
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  ticket Ticket[]
+
+  @@unique([provider, providerAccountId])
+}
+
 model Session {
   id           String   @id @default(auto()) @map("_id") @db.ObjectId
   sessionToken String   @unique @map("session_token")
   userId       String   @db.ObjectId
   expires      DateTime
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
- 
- 
 }
- 
+
 model User {
   id            String    @id @default(auto()) @map("_id") @db.ObjectId
   name          String?
@@ -51,15 +117,14 @@ model User {
   image         String?
   accounts      Account[]
   sessions      Session[]
- 
- 
 }
- 
+
 model VerificationToken {
-  identifier String @id @default(auto()) @map("_id") @db.ObjectId
+  identifier String   @id @default(auto()) @map("_id") @db.ObjectId
   token      String
   expires    DateTime
- 
+
   @@unique([identifier, token])
-  
 }
+
+//-------------------------------------------------------
