@@ -10,7 +10,7 @@ export default function Home() {
         <div className="flex flex-col items-center justify-around h-[calc(100vh-80px)] w-1/2">
           <div className="flex flex-col justify-center items-center">
             <LogoSys />
-            <h1 className="font font-bold text-2xl pl-1 hover:tracking-widest">
+            <h1 className="font font-bold text-2xl pl-1 hover:tracking-widest text-mdblue-500">
               semsys
             </h1>
           </div>
@@ -36,7 +36,7 @@ export default function Home() {
               Gerencie sua empresa
             </h1>
             <h3 className="font-semibold text-xl md:text-2xl  text-white">
-              Atendimentos, clientes
+              Atendimentos e clientes
             </h3>
           </div>
           <Image

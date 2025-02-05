@@ -7,6 +7,7 @@ export default function Dashboard() {
         <h1 className="text-3xl font-bold font-sans text-mdblue-500">DashBoard</h1>
       </div>
       
+      
     </Container>
   );
 }
