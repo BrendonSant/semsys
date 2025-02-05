@@ -2,12 +2,13 @@ import Image from "next/image";
 import heroImg from "../assets/technology.png";
 import { LogoSys } from "@/icons/logosys";
 import { Logo } from "@/icons/logo";
+import Aurora from "@/components/animations/background/aurora";
 
 export default function Home() {
   return (
-    <main className="flex items-center flex-col justify-center min-h-[calc(100vh-80px)] ">
+    <main className="flex items-center flex-col justify-center min-h-screen ">
       <div className="flex items-center gap-10 flex-col lg:flex-row lg:justify-between  justify-center w-full ">
-        <div className="flex flex-col items-center justify-around h-[calc(100vh-80px)] w-1/2">
+        <div className="flex flex-col items-center justify-around h-[calc(100vh-80px)] w-1/3">
           <div className="flex flex-col justify-center items-center">
             <LogoSys />
             <h1 className="font font-bold text-2xl pl-1 hover:tracking-widest text-mdblue-500">
@@ -29,25 +30,35 @@ export default function Home() {
           </div>
         </div>
 
-        <div className=" flex flex-col items-center justify-around h-[calc(100vh-80px)] w-1/2 bg-gradient-to-b from-[#ffffff] to-[#072e5a] ">
-          <LogoSys />
-          <div className="flex flex-col justify-center items-center">
-            <h1 className="font-bold text-3xl md:text-4xl text-white">
-              Gerencie sua empresa
-            </h1>
-            <h3 className="font-semibold text-xl md:text-2xl  text-white">
-              Atendimentos e clientes
-            </h3>
-          </div>
-          <Image
-            src={heroImg}
-            alt="Imagem hero do dev controle"
-            width={300}
-            className="max-w-sm md:max-w-xl"
+        <div className="relative flex flex-col items-center justify-around h-screen w-2/3">
+          {/* Aurora */}
+          <Aurora
+            colors={["#ffffff", "#ffffff", "#ffffff"]}
+            speed={0.8}
+            
           />
-          <div className="flex flex-col text-white">
-            <Logo />
-            <span>santsmcb</span>
+
+          {/* Conteúdo principal */}
+          <div className=" absolute flex flex-col justify-around h-screen items-center z-10">
+            <LogoSys />
+            <div className="flex flex-col justify-center items-center">
+              <h1 className="font-bold text-3xl md:text-4xl text-white">
+                Gerencie sua empresa
+              </h1>
+              <h3 className="font-semibold text-xl md:text-2xl text-white">
+                Atendimentos e clientes
+              </h3>
+            </div>
+            <Image
+              src={heroImg}
+              alt="Imagem hero do dev controle"
+              width={300}
+              className="max-w-sm md:max-w-xl opacity-15"
+            />
+            <div className="flex flex-col text-white">
+              <Logo />
+              <span>santsmcb</span>
+            </div>
           </div>
         </div>
       </div>
