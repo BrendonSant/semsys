@@ -15,16 +15,16 @@ export function Header(){
                 <Link href={"/dashboard"}>
                     <span className="text-mdblue-500">Dashboard</span>
                 </Link>
-                <Link href={"/services"}>
+                <Link href={"/servicing"}>
                     <span className="text-mdblue-500">Serviços</span>
                 </Link>
                 <Link href={"/customers"}>
                     <span className="text-mdblue-500">Clientes</span>
                 </Link>
-                <Link href={"/suplliers"}>
+                <Link href={"/suppliers"}>
                     <span className="text-mdblue-500">Fornecedores</span>
                 </Link>
-                <Link href={"/product"}>
+                <Link href={"/products"}>
                     <span className="text-mdblue-500">Produtos</span>
                 </Link>
                 </div>

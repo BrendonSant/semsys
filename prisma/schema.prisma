@@ -13,7 +13,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Custumer {
+model Customer {
   id        String    @id @default(auto()) @map("_id") @db.ObjectId
   name      String
   phone     String
@@ -41,7 +41,7 @@ model Ticket {
   total        String
 
   customerId String?   @db.ObjectId
-  customer   Custumer? @relation(fields: [customerId], references: [id])
+  customer   Customer? @relation(fields: [customerId], references: [id])
 
   supplierId String?   @db.ObjectId
   supplier   Supplier? @relation(fields: [supplierId], references: [id])
@@ -115,7 +115,7 @@ model User {
   accounts      Account[]
   sessions      Session[]
   tickets Ticket[]
-  customers Custumer[]
+  customers Customer[]
 }
 
 model VerificationToken {
