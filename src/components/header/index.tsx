@@ -3,14 +3,23 @@
 import Link from "next/link";
 import { FiUser, FiLogOut, FiLoader, FiLock } from "react-icons/fi";
 import { signIn, signOut, useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 
 export function Header() {
   const { status, data } = useSession();
 
+   const router = useRouter();
+  
+    useEffect(() => {
+      if (status === "authenticated") {
+        router.push("/dashboard");
+      }
+    }, [status, router]);
+
   async function handleLogin() {
     await signIn();
-    
     
   }
 
