@@ -39,6 +39,7 @@ model Ticket {
   update_at    DateTime? @default(now())
   serviceprice String
   total        String
+  payment   String
 
   customerId String?   @db.ObjectId
   customer   Customer? @relation(fields: [customerId], references: [id])
