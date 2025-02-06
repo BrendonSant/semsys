@@ -34,12 +34,13 @@ model Ticket {
   id           String    @id @default(auto()) @map("_id") @db.ObjectId
   name         String
   description  String
+  payment      String
   status       String
   create_at    DateTime? @default(now())
   update_at    DateTime? @default(now())
   serviceprice String
   total        String
-  payment   String
+  
 
   customerId String?   @db.ObjectId
   customer   Customer? @relation(fields: [customerId], references: [id])

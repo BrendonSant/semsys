@@ -3,12 +3,20 @@ import { LogoSys } from "@/icons/logosys";
 import { Logo } from "@/icons/logo";
 import Aurora from "@/components/animations/background/aurora";
 import { LogoBig } from "@/icons/logosysbig";
-import { signIn} from "next-auth/react";
+import { signIn, useSession} from "next-auth/react";
 import { LogoGoogle } from "@/icons/logogoogle";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 export default function Home() {
+  const { data: session, status } = useSession();
+  const router = useRouter();
 
-  
+  useEffect(() => {
+    if (status === "authenticated") {
+      router.push("/dashboard");
+    }
+  }, [status, router]);
 
   async function handleLogin() {
     await signIn();
