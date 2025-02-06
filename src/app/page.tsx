@@ -46,12 +46,7 @@ export default function Home() {
           <div className=" absolute flex flex-col justify-around h-screen items-center z-10">
             <LogoSys />
 
-            <Image
-              src={heroImg}
-              alt="Imagem hero do dev controle"
-              width={250}
-              className="max-w-sm md:max-w-xl opacity-30"
-            />
+            
             <div className="flex flex-col text-white">
               <Logo />
               <span>santsmcb</span>
