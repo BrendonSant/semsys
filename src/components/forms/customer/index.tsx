@@ -38,21 +38,21 @@ export function NewCustomerForm(){
              register={register}
              />
               <label className='mt-3'>Email: </label>
-            <Input type='text'
+            <Input type='email'
              name='email' 
              placeholder='Digite um email valido.'
              error={errors.email?.message}
              register={register}
              />
                <label className='mt-3'>Celular: </label>
-            <Input type='text'
+            <Input type='number'
              name='phone' 
              placeholder='Digite o número do celular'
              error={errors.phone?.message}
              register={register}
              />
               <label className='mt-3'>Documento: </label>
-            <Input type='text'
+            <Input type='number'
              name='document' 
              placeholder='Digite o CPF'
              error={errors.document?.message}
@@ -65,6 +65,11 @@ export function NewCustomerForm(){
              error={errors.address?.message}
              register={register}
              />
+
+             <button className='bg-mdblue-500 my-4 px-2 h-11 rounded-sm text-white font-montserrat font-bold hover:bg-mblue-500 transition-all duration-500'
+             type='submit'>
+                Salvar
+             </button>
         </form>
     )
 }
