@@ -3,20 +3,15 @@ import { LogoSys } from "@/icons/logosys";
 import { Logo } from "@/icons/logo";
 import Aurora from "@/components/animations/background/aurora";
 import { LogoBig } from "@/icons/logosysbig";
-import { signIn, useSession} from "next-auth/react";
+import { signIn} from "next-auth/react";
 import { LogoGoogle } from "@/icons/logogoogle";
-import { useRouter } from "next/navigation";
-import { useEffect } from "react";
 
-export default function Home() {
-  const { data: session, status } = useSession();
-  const router = useRouter();
 
-  useEffect(() => {
-    if (status === "authenticated") {
-      router.push("/dashboard");
-    }
-  }, [status, router]);
+
+export default  function Home() {
+  
+  
+  
 
   async function handleLogin() {
     await signIn();
@@ -25,7 +20,7 @@ export default function Home() {
   }
 
   return (
-    <main className="flex items-center flex-col justify-center min-h-screen ">
+    <main className=" top-0 absolute w-full flex items-center flex-col justify-center min-h-screen ">
       <div className="flex items-center gap-10 flex-col lg:flex-row lg:justify-between  justify-center w-full ">
         <div className="flex flex-col items-center justify-around h-screen w-1/2">
           <div className="flex flex-col justify-center items-center gap-6">

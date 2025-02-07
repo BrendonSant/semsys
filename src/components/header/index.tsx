@@ -30,7 +30,7 @@ export function Header() {
   return (
     <div className="w-full">
       {status === "loading" && (
-        <header className="fixed top-0 left-0 right-0 w-full flex items-center px-4 py-4 bg-transparent h-20 z-50 ">
+        <header className=" w-full flex items-center px-4 py-4 bg-transparent h-20 z-50 ">
           <div className="w-full flex my-auto items-center justify-between max-w-[1680px] mx-auto">
             <Link href="/">
               <h1 className="font-bold text-2xl pl-1 hover:tracking-widest text-mdblue-500">
