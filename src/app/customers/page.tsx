@@ -1,3 +1,4 @@
+import { CardInfo } from "@/components/card/card";
 import { Container } from "@/components/container";
 import { Button } from "@/components/ui/button"
 import { FiUserPlus } from "react-icons/fi";
@@ -12,6 +13,12 @@ export default function Customers(){
                 <FiUserPlus/>
                 Cadastrar Cliente</Button>
 
+             </div>
+
+             <div className="flex flex-col md:flex-row w-full gap-2">
+              <CardInfo/>
+              <CardInfo/>
+              <CardInfo/>
              </div>
              
              
