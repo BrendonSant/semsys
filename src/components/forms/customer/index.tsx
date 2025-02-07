@@ -1,0 +1,70 @@
+'use client'
+
+import {useForm} from 'react-hook-form'
+import {z} from 'zod'
+import {zodResolver} from '@hookform/resolvers/zod'
+import { Input } from '../input'
+
+const schema = z.object({
+    name: z.string().min(1,"O campo nome é obrigatorio!"),
+    email: z.string().email("Digite um email valido!").min(1,"O email é um campo obrigatorio!"),
+    phone: z.string().refine((value) =>{
+        return /^(?:\(\d{2}\)\s?)?\d{9}$/.test(value) || /^\d{2}\s\d{9}$/.test(value) || /^\d{11}&/.test(value)
+
+    },{
+        message: "O número do telefone deve seguir o padrão (DD) 999999999. "
+    } ),
+    document: z.string().min(11,"O campo nome é obrigatorio!"),
+    address: z.string(),
+
+})
+
+type FormData = z.infer<typeof schema>
+
+export function NewCustomerForm(){
+
+    
+
+    const{register, handleSubmit, formState: {errors}}= useForm<FormData>({
+        resolver: zodResolver(schema)
+    })
+    return(
+        <form className='flex flex-col w-full'>
+            <label className='mt-3'>Nome do Cliente: </label>
+            <Input type='text'
+             name='name' 
+             placeholder='Digite o nome completo.'
+             error={errors.name?.message}
+             register={register}
+             />
+              <label className='mt-3'>Email: </label>
+            <Input type='text'
+             name='email' 
+             placeholder='Digite um email valido.'
+             error={errors.email?.message}
+             register={register}
+             />
+               <label className='mt-3'>Celular: </label>
+            <Input type='text'
+             name='phone' 
+             placeholder='Digite o número do celular'
+             error={errors.phone?.message}
+             register={register}
+             />
+              <label className='mt-3'>Documento: </label>
+            <Input type='text'
+             name='document' 
+             placeholder='Digite o CPF'
+             error={errors.document?.message}
+             register={register}
+             />
+              <label className='mt-3'>Endereço </label>
+            <Input type='text'
+             name='address' 
+             placeholder='Digite o número do celular'
+             error={errors.address?.message}
+             register={register}
+             />
+        </form>
+    )
+}

@@ -1,5 +1,5 @@
 import { Container } from "@/components/container";
-import { TabDashboard } from "@/components/dashboard/tabdashboard";
+import { TabDashboard } from "@/components/dashboard";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { authOptions } from "@/lib/auth";
 import { getServerSession } from "next-auth";

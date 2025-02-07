@@ -6,7 +6,7 @@ import { LogoBig } from "@/icons/logosysbig";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { redirect } from "next/navigation";
-import { ButonLogin } from "@/components/button/buttonlogin";
+import { ButonLogin } from "@/components/button";
 
 
 
