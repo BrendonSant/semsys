@@ -3,11 +3,11 @@ import { LogoSys } from "@/icons/logosys";
 import { Logo } from "@/icons/logo";
 import Aurora from "@/components/animations/background/aurora";
 import { LogoBig } from "@/icons/logosysbig";
-import { signIn} from "next-auth/react";
-import { LogoGoogle } from "@/icons/logogoogle";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { redirect } from "next/navigation";
+import { ButonLogin } from "@/components/button/buttonlogin";
+
 
 
 
@@ -18,13 +18,8 @@ export default async function Home() {
       redirect('/dashboard')
     }
   
-
-  async function handleLogin() {
-    await signIn();
     
-    
-  }
-
+  
   return (
     <main className=" top-0 absolute w-full flex items-center flex-col justify-center min-h-screen ">
       <div className="flex items-center gap-10 flex-col lg:flex-row lg:justify-between  justify-center w-full ">
@@ -52,10 +47,7 @@ export default async function Home() {
               <h3 className="font-semibold text-xl md:text-xl text-mgray-300 ">
                 Praticidade e simplicidade.
               </h3>
-              <button onClick={handleLogin} className=" flex justify-center items-center gap-4 bg-mdblue-500 text-white font-semibold w-1/3 h-12 rounded-md mt-4">
-                <LogoGoogle/>
-                Começar agora
-              </button>
+              <ButonLogin/>
               
             </div>
 
