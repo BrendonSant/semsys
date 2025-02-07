@@ -1,8 +1,15 @@
 import { Container } from "@/components/container";
 import { TabDashboard } from "@/components/dashboard/tabdashboard";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { authOptions } from "@/lib/auth";
+import { getServerSession } from "next-auth";
+import { redirect } from "next/navigation";
 
-export default function Dashboard() {
+export default async function Dashboard() {
+  const session = await getServerSession(authOptions)
+  if (!session || !session.user){
+    redirect('/')
+  }
   return (
     <Container>
       <div className="flex w-full mt-10 mb-6">

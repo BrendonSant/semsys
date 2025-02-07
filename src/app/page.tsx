@@ -1,16 +1,22 @@
-'use client'
+
 import { LogoSys } from "@/icons/logosys";
 import { Logo } from "@/icons/logo";
 import Aurora from "@/components/animations/background/aurora";
 import { LogoBig } from "@/icons/logosysbig";
 import { signIn} from "next-auth/react";
 import { LogoGoogle } from "@/icons/logogoogle";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth";
+import { redirect } from "next/navigation";
 
 
 
-export default  function Home() {
+export default async function Home() {
   
-  
+  const session = await getServerSession(authOptions)
+    if (session){
+      redirect('/dashboard')
+    }
   
 
   async function handleLogin() {
