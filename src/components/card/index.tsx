@@ -16,7 +16,7 @@ export function CardInfo() {
       <CardHeader>
         <div className="flex justify-between px-1">
             <div>
-            <Image src={Avatar} alt="Avatar user" height={52} />
+           
             </div>
             <FiEdit/>
         </div>

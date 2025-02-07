@@ -18,7 +18,6 @@ model Customer {
   name      String
   phone     String
   email     String
-  img       String?
   address   String?
   document  String
   create_at DateTime? @default(now())
@@ -72,7 +71,7 @@ model Product {
   id    String  @id @default(auto()) @map("_id") @db.ObjectId
   name  String
   price String
-  img   String?
+  
 
   tickets Ticket[]
 }

@@ -29,7 +29,7 @@ export default function Customers() {
 
           <SheetContent className="w-full md:w-1/2 ">
             <SheetHeader>
-              <SheetTitle>Cadastro de Cliente</SheetTitle>
+              <SheetTitle className="font-montserrat font-bold text-3xl text-mdblue-500">Cadastro de Cliente</SheetTitle>
             </SheetHeader>
             <div className="mt-10">
             <NewCustomerForm/>
