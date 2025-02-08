@@ -4,6 +4,8 @@ import {useForm} from 'react-hook-form'
 import {z} from 'zod'
 import {zodResolver} from '@hookform/resolvers/zod'
 import { Input } from '../input'
+import {api} from '@/lib/api'
+import {useRouter} from 'next/navigation'
 
 const schema = z.object({
     name: z.string().min(1,"O campo nome é obrigatorio!"),
@@ -21,15 +23,32 @@ const schema = z.object({
 
 type FormData = z.infer<typeof schema>
 
-export function NewCustomerForm(){
+export function NewCustomerForm({userId,onClose}: {userId: string; onClose: () => void}){
 
     
 
     const{register, handleSubmit, formState: {errors}}= useForm<FormData>({
         resolver: zodResolver(schema)
     })
+
+    const router = useRouter()
+
+    async function handleRegisterCustomer(data: FormData){
+       await api.post('/api/customer', {
+        name: data.name,
+        email: data.email,
+        phone: data.phone,
+        document: data.document,
+        address: data.address,
+        userId: userId
+       })
+
+       router.replace('/customers')
+       onClose();
+    }
+
     return(
-        <form className='flex flex-col w-full'>
+        <form className='flex flex-col w-full' onSubmit={handleSubmit(handleRegisterCustomer)}>
             <label className='mt-3'>Nome do Cliente: </label>
             <Input type='text'
              name='name' 
@@ -45,7 +64,7 @@ export function NewCustomerForm(){
              register={register}
              />
                <label className='mt-3'>Celular: </label>
-            <Input type='number'
+            <Input type='text'
              name='phone' 
              placeholder='Digite o número do celular'
              error={errors.phone?.message}
