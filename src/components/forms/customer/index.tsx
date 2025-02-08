@@ -43,6 +43,7 @@ export function NewCustomerForm({userId,onClose}: {userId: string; onClose: () =
         userId: userId
        })
 
+       router.refresh();
        router.replace('/customers')
        onClose();
     }
