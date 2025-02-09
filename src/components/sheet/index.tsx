@@ -7,11 +7,12 @@ import {
   SheetContent,
   SheetHeader,
   SheetTitle,
-  SheetTrigger,
+  
 } from "@/components/ui/sheet";
 import { NewCustomerForm } from "@/components/forms/customer";
+import { SupplierForm } from '@/components/forms/suplliers'
 
-export function SheetCustomer({ userId }: { userId: string }) {
+export function SheetCustomer({ userId,buttonname,title,type }: { userId: string; buttonname: string; title: string; type: string }) {
   const [isSheetOpen, setIsSheetOpen] = useState(false);
 
   const toggleSheet = () => setIsSheetOpen((prev: boolean) => !prev);
@@ -21,20 +22,32 @@ export function SheetCustomer({ userId }: { userId: string }) {
       <Sheet open={isSheetOpen} onOpenChange={toggleSheet}>
         <Button variant={"outline"} onClick={toggleSheet}>
           <FiUserPlus />
-          Novo Cliente
+          {buttonname}
         </Button>
 
         <SheetContent className="w-full md:w-1/2 ">
           <SheetHeader>
             <SheetTitle className="font-montserrat font-bold text-3xl text-mdblue-500">
-              Cadastro de Cliente
+              {title}
             </SheetTitle>
           </SheetHeader>
           <div className="mt-10">
-            <NewCustomerForm
+            {type === "customer" ? (
+              <NewCustomerForm
               userId={userId}
               onClose={() => setIsSheetOpen(false)}
             />
+            ) : type === "supplier" ? (
+              <SupplierForm
+              userId={userId}
+              onClose={() => setIsSheetOpen(false)}
+            />
+            ) : type === "product" ? (
+              <NewCustomerForm
+              userId={userId}
+              onClose={() => setIsSheetOpen(false)}
+            />
+            ) : null}
           </div>
         </SheetContent>
       </Sheet>

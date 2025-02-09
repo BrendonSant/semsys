@@ -21,7 +21,7 @@ export function CardInfo({ customer }: { customer: CustomerProps }) {
           id: customer.id,
         },
       });
-      
+      console.log(response);
       router.refresh();
     } catch (error) {
       console.log(error);
