@@ -6,7 +6,7 @@ import { redirect } from "next/navigation";
 import { SheetCustomer } from "@/components/sheet";
 import prismaClient from "@/lib/prisma";
 import { FiEdit, FiTrash } from "react-icons/fi";
-import { Ticket } from "lucide-react";
+
 
 
 export default async function Servicing() {

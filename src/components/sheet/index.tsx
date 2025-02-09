@@ -48,7 +48,11 @@ export function SheetCustomer({ userId,buttonname,title,type }: { userId: string
               userId={userId}
               onClose={() => setIsSheetOpen(false)}
             />
-            ) : null}
+            ): type === "servicing" ? (
+              <ProductForm
+              userId={userId}
+              onClose={() => setIsSheetOpen(false)}
+            />) : null}
           </div>
         </SheetContent>
       </Sheet>
