@@ -40,6 +40,15 @@ export default async function Customers() {
        ))}
        
       </div>
+      {customers.length === 0 && (
+        <div className="flex justify-center items-center h-96">
+          <h1 className="text-2xl font-montserrat font-bold text-mdblue-500">
+            Nenhum cliente cadastrado
+          </h1>
+        </div>
+      )
+      }
+
     </Container>
   );
 }

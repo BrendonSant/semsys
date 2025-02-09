@@ -19,7 +19,39 @@ export async function DELETE(request: Request) {
     const {searchParams} = new URL(request.url);
     const userId = searchParams.get('id');
 
-    return NextResponse.json({ message: 'Delete customer' })
+    if(!userId) {
+        return NextResponse.json({ error: 'User id not found' },{
+            status: 400
+        })
+    }
+
+    const findTicket = await prismaClient.ticket.findFirst({
+        where: {
+            customerId: userId
+        }
+    })
+
+    if(findTicket) {
+        return NextResponse.json({ error: 'Cliente possui tickets ativos' },{
+            status: 400
+        })
+    }
+
+   try {
+    await prismaClient.customer.delete({
+        where: {
+            id: userId as string
+        }
+    })
+
+    return NextResponse.json({ message: 'Cliente deletado!'});
+    
+   } catch (error) {
+    console.log(error);
+    return NextResponse.json({ error: 'Failed delete customer' },{
+        status: 400
+    })
+   }
 }
 
 export async function POST(request: Request) {
