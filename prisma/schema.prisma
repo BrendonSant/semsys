@@ -39,7 +39,6 @@ model Ticket {
   update_at    DateTime? @default(now())
   serviceprice String
   total        String
-  
 
   customerId String?   @db.ObjectId
   customer   Customer? @relation(fields: [customerId], references: [id])
@@ -67,15 +66,17 @@ model Supplier {
   userId String? @db.ObjectId
   user   User?   @relation(fields: [userId], references: [id])
 
-
   tickets Ticket[]
 }
 
 model Product {
-  id    String  @id @default(auto()) @map("_id") @db.ObjectId
-  name  String
-  price String
-  
+  id          String @id @default(auto()) @map("_id") @db.ObjectId
+  name        String
+  price       String
+  description String?
+
+  userId String? @db.ObjectId
+  user   User?   @relation(fields: [userId], references: [id])
 
   tickets Ticket[]
 }
@@ -119,6 +120,7 @@ model User {
   tickets       Ticket[]
   customers     Customer[]
   suppliers     Supplier[]
+  products      Product[]
 }
 
 model VerificationToken {

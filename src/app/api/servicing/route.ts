@@ -20,35 +20,25 @@ export async function DELETE(request: Request) {
     const userId = searchParams.get('id');
 
     if(!userId) {
-        return NextResponse.json({ error: 'User id not found' },{
+        return NextResponse.json({ error: 'Service id not found' },{
             status: 400
         })
     }
 
-    const findTicket = await prismaClient.ticket.findFirst({
-        where: {
-            supplierId: userId
-        }
-    })
-
-    if(findTicket) {
-        return NextResponse.json({ error: 'Cliente possui tickets ativos' },{
-            status: 400
-        })
-    }
+   
 
    try {
-    await prismaClient.supplier.delete({
+    await prismaClient.ticket.delete({
         where: {
             id: userId as string
         }
     })
 
-    return NextResponse.json({ message: 'Cliente deletado!'});
+    return NextResponse.json({ message: 'Serviço deletado!'});
     
    } catch (error) {
     console.log(error);
-    return NextResponse.json({ error: 'Failed delete supplier' },{
+    return NextResponse.json({ error: 'Failed delete service' },{
         status: 400
     })
    }
@@ -67,25 +57,29 @@ export async function POST(request: Request) {
         })
     }
 
-    const { name, email,phone,address,document,userId } = await request.json();
+    const { name,description,payment,status,serviceprice,total,customerId,supplierId,productId,userId } = await request.json();
 
     try {
 
-        await prismaClient.supplier.create({
+        await prismaClient.ticket.create({
             data: {
                 name,
-                email,
-                phone,
-                address: address || '',
-                document,
+                description,
+                payment,
+                status,
+                serviceprice,
+                total,
+                customerId: customerId,
+                supplierId: supplierId,
+                productId: productId,
                 userId: userId
             }
         })
 
-        return NextResponse.json({ message: 'Cliente cadastrado!' })
+        return NextResponse.json({ message: 'Serviço lançado!' })
         
     } catch (error) {
-        return NextResponse.json({ error: 'Failed create new supplier' },{
+        return NextResponse.json({ error: 'Failed create new service' },{
             status: 400
         })
     }

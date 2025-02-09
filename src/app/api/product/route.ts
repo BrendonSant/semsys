@@ -27,7 +27,7 @@ export async function DELETE(request: Request) {
 
     const findTicket = await prismaClient.ticket.findFirst({
         where: {
-            supplierId: userId
+            productId: userId
         }
     })
 
@@ -38,7 +38,7 @@ export async function DELETE(request: Request) {
     }
 
    try {
-    await prismaClient.supplier.delete({
+    await prismaClient.product.delete({
         where: {
             id: userId as string
         }
@@ -67,25 +67,23 @@ export async function POST(request: Request) {
         })
     }
 
-    const { name, email,phone,address,document,userId } = await request.json();
+    const { name,price,description,userId } = await request.json();
 
     try {
 
-        await prismaClient.supplier.create({
+        await prismaClient.product.create({
             data: {
                 name,
-                email,
-                phone,
-                address: address || '',
-                document,
+                price,
+                description,
                 userId: userId
             }
         })
 
-        return NextResponse.json({ message: 'Cliente cadastrado!' })
+        return NextResponse.json({ message: 'Produto cadastrado!' })
         
     } catch (error) {
-        return NextResponse.json({ error: 'Failed create new supplier' },{
+        return NextResponse.json({ error: 'Failed create new product' },{
             status: 400
         })
     }

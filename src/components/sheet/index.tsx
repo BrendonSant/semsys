@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/sheet";
 import { NewCustomerForm } from "@/components/forms/customer";
 import { SupplierForm } from '@/components/forms/suplliers'
+import { ProductForm } from "../forms/product";
 
 export function SheetCustomer({ userId,buttonname,title,type }: { userId: string; buttonname: string; title: string; type: string }) {
   const [isSheetOpen, setIsSheetOpen] = useState(false);
@@ -43,7 +44,7 @@ export function SheetCustomer({ userId,buttonname,title,type }: { userId: string
               onClose={() => setIsSheetOpen(false)}
             />
             ) : type === "product" ? (
-              <NewCustomerForm
+              <ProductForm
               userId={userId}
               onClose={() => setIsSheetOpen(false)}
             />
