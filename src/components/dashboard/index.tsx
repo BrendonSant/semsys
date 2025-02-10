@@ -29,6 +29,33 @@ const session = await getServerSession(authOptions);
     },
   });
 
+  const customer = await prismaClient.customer.findMany({
+    where: {
+      id: session.user.id,
+      
+    },
+  });
+
+  const customertotal = customer.length;
+
+  console.log(customertotal);
+
+
+
+  const service = await prismaClient.ticket.findMany({
+    where: { 
+      userId: session.user.id, // Filtrar por userId do usuário logado
+      status: 'Realizado'      // Filtrar apenas tickets com status 'Realizado'
+    },
+    select: {
+      id: true,        // Escolha os campos que você deseja retornar
+    },
+  });
+
+  const serviceDone = service.length;
+
+
+
 
 
   return (
@@ -60,27 +87,27 @@ const session = await getServerSession(authOptions);
         <Card className="w-1/2  px-6">
           <CardHeader className="flex flex-row justify-between w-full px-4">
             <CardTitle className="text-sm font-montserrat font-medium">
-              Vendas
+              Número de clientes
             </CardTitle>
             <FiDollarSign />
           </CardHeader>
           <CardDescription className="font-montserrat font-bold text-2xl px-4 text-black">
-            R$2000,00
+           {customertotal}
           </CardDescription>
-          <CardFooter>+5% acima do mês anterior</CardFooter>
+          <CardFooter>número de clientes cadastrados</CardFooter>
         </Card>
 
         <Card className="w-1/2  px-6">
           <CardHeader className="flex flex-row justify-between w-full px-4">
             <CardTitle className="text-sm font-montserrat font-medium">
-              Vendas
+              Serviços realizados
             </CardTitle>
             <FiDollarSign />
           </CardHeader>
           <CardDescription className="font-montserrat font-bold text-2xl px-4 text-black">
-            R$2000,00
+            {serviceDone}
           </CardDescription>
-          <CardFooter>+5% acima do mês anterior</CardFooter>
+          <CardFooter>número total de serviços realizados</CardFooter>
         </Card>
       </div>
     </div>
