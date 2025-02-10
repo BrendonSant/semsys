@@ -48,11 +48,11 @@ export default async function Servicing() {
           <tr className="text-left">
             <th>Nome</th>
             <th>Cliente</th>
-            <th>Data</th>
-            <th>Status</th>
+            <th className="  hidden lg:block">Data</th>
             <th>Valor</th>
             <th>Total</th>
-            <th>Pagamento</th>
+            <th className="  hidden lg:block">Pagamento </th>
+            <th>Status</th>
             <th className="text-end">Ações</th>
           </tr>
         </thead>
@@ -64,15 +64,15 @@ export default async function Servicing() {
             >
               <td>{service.name}</td>
               <td>{service.customerId}</td>
-              <td>
+              <td className="  hidden lg:block">
                 {service.create_at
                   ? service.create_at.toLocaleDateString()
                   : "N/A"}
               </td>
-              <td>{service.status}</td>
               <td>{service.serviceprice}</td>
               <td>{service.total}</td>
-              <td>{service.payment}</td>
+              <td  className="  hidden lg:block">{service.payment}</td>
+              <td>{service.status}</td>
               <td className="text-right">
                 <div className="flex justify-end gap-2">
                   <button>
