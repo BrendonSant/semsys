@@ -77,7 +77,7 @@ export function Header() {
             <button className="focus:outline-none">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                className="h-8 w-8 text-white"
+                className="h-8 w-8 text-mdblue-500"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
