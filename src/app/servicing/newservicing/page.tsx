@@ -88,6 +88,9 @@ export default async function NewServices(){
                     <option value="Execultando">Execultando</option>
                     <option value="Não iniciado">Não iniciado</option>
                   </select>
+                  <button className=" bg-mdblue-500 text-white font-montserrat font-bold rounded-sm h-11 mt-4">
+                    Lançar serviço
+                  </button>
                 </form>
               </div>
             </div>
