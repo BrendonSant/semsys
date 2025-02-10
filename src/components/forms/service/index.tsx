@@ -5,7 +5,7 @@ import prismaClient from '@/lib/prisma'
 
 
 
-export async function ServiceForm() {
+export async function ServiForm() {
 
   const session = await getServerSession(authOptions);
 
