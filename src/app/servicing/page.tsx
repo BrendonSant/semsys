@@ -33,15 +33,12 @@ export default async function Servicing() {
         <h1 className="text-3xl font-bold font-sans text-mdblue-500">
           Serviços
         </h1>
-        <Link href='servicing/newservicing'>
-        <Button variant={"outline"}>
+        <Link href="servicing/newservicing">
+          <Button variant={"outline"}>
             <FiUserPlus />
             Novo serviço
           </Button>
-
         </Link>
-        
-
       </div>
       <table className="min-w-full my-2 ">
         <thead className=" my-2 border border-gray-200 h-8">
@@ -71,8 +68,34 @@ export default async function Servicing() {
               </td>
               <td>{service.serviceprice}</td>
               <td>{service.total}</td>
-              <td  className="  hidden lg:block">{service.payment}</td>
-              <td>{service.status}</td>
+              <td className="  hidden lg:block">{service.payment}</td>
+              <td className="flex items-center gap-2">
+                {service.status === "Realizado" && (
+                  <span
+                    className="w-3 h-3 rounded-full bg-green-500 inline-block"
+                    title="Status Realizado"
+                  ></span>
+                )}
+                 {service.status === "Parado" && (
+                  <span
+                    className="w-3 h-3 rounded-full bg-red-500 inline-block"
+                    title="Status Parado"
+                  ></span>
+                )}
+                 {service.status === "Executando" && (
+                  <span
+                    className="w-3 h-3 rounded-full bg-blue-500 inline-block"
+                    title="Status Execultando"
+                  ></span>
+                )}
+                 {service.status === "Não iniciado" && (
+                  <span
+                    className="w-3 h-3 rounded-full bg-yellow-500 inline-block"
+                    title="Status Não iniciado"
+                  ></span>
+                )}
+                {service.status}
+              </td>
               <td className="text-right">
                 <div className="flex justify-end gap-2">
                   <button>
