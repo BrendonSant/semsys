@@ -21,7 +21,7 @@ export default async function Home() {
     
   
   return (
-    <main className=" top-0 absolute w-full flex items-center flex-col justify-center min-h-screen ">
+    <main className=" top-0 absolute w-full flex items-center flex-col justify-center min-h-screen">
       <div className="flex  items-center gap-10 flex-col lg:flex-row lg:justify-between  justify-center w-full ">
         <div className="flex z-10 flex-col items-center justify-around h-screen w-full lg:w-1/2">
           <div className="flex flex-col justify-center items-center gap-6">
@@ -61,7 +61,7 @@ export default async function Home() {
               </div>
         </div>
 
-        <div className="absolute z-0 w-full lg:relative flex flex-col items-center justify-around h-screen lg:w-1/2 ">
+        <div className="absolute z-0 w-full lg:relative flex flex-col items-center justify-around h-scream lg:h-screen lg:w-1/2  ">
           {/* Aurora */}
           <Aurora  speed={1.5} />
 
