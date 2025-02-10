@@ -68,7 +68,7 @@ export function Header() {
         <header className="w-full flex items-center px-4 py-4 bg-transparent h-20 z-50">
         <div className="w-full flex items-center justify-between max-w-[1680px] mx-auto">
           <Link href="/">
-            <h1 className="font-bold text-2xl pl-1 hover:text-mblue-500 transition-all duration-500 text-mdblue-500">
+            <h1 className="font-bold text-2xl pl-1 hover:text-mblue-500 transition duration-500 text-mdblue-500">
               semsys
             </h1>
           </Link>
