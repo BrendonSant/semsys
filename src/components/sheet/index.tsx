@@ -1,4 +1,4 @@
-"use client";
+'use client'
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { FiUserPlus } from "react-icons/fi";
@@ -12,6 +12,7 @@ import {
 import { NewCustomerForm } from "@/components/forms/customer";
 import { SupplierForm } from '@/components/forms/suplliers'
 import { ProductForm } from "../forms/product";
+import { ServiceForm } from "../forms/service";
 
 export function SheetCustomer({ userId,buttonname,title,type }: { userId: string; buttonname: string; title: string; type: string }) {
   const [isSheetOpen, setIsSheetOpen] = useState(false);
@@ -49,9 +50,9 @@ export function SheetCustomer({ userId,buttonname,title,type }: { userId: string
               onClose={() => setIsSheetOpen(false)}
             />
             ): type === "servicing" ? (
-              <ProductForm
-              userId={userId}
-              onClose={() => setIsSheetOpen(false)}
+              <ServiceForm
+             
+             
             />) : null}
           </div>
         </SheetContent>

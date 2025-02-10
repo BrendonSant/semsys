@@ -3,7 +3,7 @@ export interface CustomerProps{
     name: string;
     description: string;
     payment: 'Realizado' | 'Pendente';
-    status: 'Realizado' | 'Parado' | 'Executando';
+    status: 'Realizado' | 'Parado' | 'Executando' | 'Não iniciado';
     create_at: Date | null;
     update_at: Date | null;
     serviceprice: string;
