@@ -9,6 +9,9 @@ export default {
   ],
   theme: {
   	extend: {
+		boxShadow: {
+			'left': '-12px 0 6px -2px rgba(0, 0, 0, 0.1)', // Sombra lateral esquerda
+		  },
   		colors: {
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',

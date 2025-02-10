@@ -69,7 +69,7 @@ export default async function Home() {
           <Aurora  speed={1.5} />
 
           {/* Conteúdo principal */}
-          <div className=" absolute flex flex-col justify-around h-screen items-center z-50">
+          <div className=" absolute flex flex-col justify-around h-screen items-center z-50 lg:shadow-left w-full lg:w-full ">
             <LogoBig />
           </div>
         </div>
