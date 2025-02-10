@@ -8,20 +8,44 @@ import {
 import Image from "next/image";
 import Avatar from "@/assets/avatar.png";
 import { FiDollarSign } from "react-icons/fi";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth";
+import { redirect } from "next/navigation";
+import prismaClient from "@/lib/prisma";
 
-export function TabDashboard() {
+export async function TabDashboard() {
+
+const session = await getServerSession(authOptions);
+
+  if (!session || !session.user) {
+    redirect("/");
+  }
+
+  const usernow = await prismaClient.user.findMany({
+    where: {
+      id: session.user.id,
+      image: session.user.image
+      
+    },
+  });
+
+
+
   return (
     <div className="flex flex-col lg:flex-row mt-8 w-full justify-between gap-6 lg:gap-8">
       <Card className="w-full  lg:w-1/2 flex items-center justify-between ">
         <div className="flex items-center py-4 px-8 ">
           <div>
-            <Image src={Avatar} alt="Avatar user" height={52} />
+            <Image src={session.user.image || Avatar}
+             alt="Avatar user" height={52} width={52}
+              className="rounded-full object-cover"
+             />
           </div>
           <CardHeader>
             <CardTitle className="text-2xl font-montserrat font-bold">
-              Brendon Santos
+              {session.user.name}
             </CardTitle>
-            <CardDescription className="font-montserrat">brendonsantos20@gmail.com</CardDescription>
+            <CardDescription className="font-montserrat">{session.user.email}</CardDescription>
           </CardHeader>
         </div>
         <div className="flex flex-col items-center justify-center px-8">

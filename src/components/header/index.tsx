@@ -82,12 +82,9 @@ export function Header() {
             {/* Menu hambúrguer visível apenas no mobile */}
 
             <DropdownMenu>
-              <DropdownMenuTrigger>
-                <div className="md:hidden">
-                  <button
-                    className="focus:outline-none"
-                    onClick={handleDropDown}
-                  >
+              <DropdownMenuTrigger onClick={handleDropDown} className="md:hidden focus:outline-none" >
+                
+                  
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       className="h-8 w-8 text-mdblue-500"
@@ -102,8 +99,8 @@ export function Header() {
                         d="M4 6h16M4 12h16m-7 6h7"
                       />
                     </svg>
-                  </button>
-                </div>
+                  
+                
               </DropdownMenuTrigger>
               <DropdownMenuContent>
                 <DropdownMenuItem>
