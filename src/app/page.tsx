@@ -11,7 +11,10 @@ import { ButonLogin } from "@/components/button";
 
 
 
+
 export default async function Home() {
+
+  await new Promise((resolve) => setTimeout(resolve, 2000));
   
   const session = await getServerSession(authOptions)
     if (session){
