@@ -50,7 +50,7 @@ export default async function Servicing() {
             <th>Valor</th>
             <th>Total</th>
             <th className="  hidden lg:block">Pagamento </th>
-            <th>Status</th>
+            <th className="  hidden lg:block">Status</th>
             <th className="text-end">Ações</th>
           </tr>
         </thead>
