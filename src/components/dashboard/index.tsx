@@ -12,7 +12,8 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import prismaClient from "@/lib/prisma";
-
+import ServiceChart from "../chart/charts";
+import { ServiceProps } from "@/util/servicing.type";
 
 
 export async function TabDashboard() {
@@ -46,6 +47,12 @@ export async function TabDashboard() {
       id: true, // Escolha os campos que você deseja retornar
     },
   });
+
+  const services = await prismaClient.ticket.findMany({
+    where:{
+      userId: session.user.id
+    }
+  })
 
   const serviceDone = service.length;
 
@@ -95,7 +102,7 @@ export async function TabDashboard() {
 
         <Card className="w-1/2  px-6">
           <CardHeader className="flex flex-row justify-between w-full px-4">
-            <CardTitle className="text-sm font-montserrat font-medium">
+            <CardTitle className=" flex-wrap text-sm font-montserrat font-medium">
               Serviços realizados
             </CardTitle>
             <FiDollarSign />
@@ -103,9 +110,10 @@ export async function TabDashboard() {
           <CardDescription className=" flex justify-center items-center w-full font-montserrat font-bold text-2xl px-4 text-black">
             {serviceDone}
           </CardDescription>
-          <CardFooter>número total de serviços realizados</CardFooter>
+          <CardFooter className="text-xs md:text-sm">número total de serviços realizados</CardFooter>
         </Card>
       </div>
+      
      
       
     </div>
