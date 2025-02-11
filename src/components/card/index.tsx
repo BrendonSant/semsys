@@ -33,7 +33,7 @@ export function CardInfo({ customer }: { customer: CustomerProps }) {
       <CardHeader>
         <div className="flex justify-between px-1">
           <div></div>
-          <FiEdit />
+          <FiEdit size={24} />
         </div>
       </CardHeader>
       <CardContent className="flex flex-col items-start md:items-start ">
@@ -55,7 +55,7 @@ export function CardInfo({ customer }: { customer: CustomerProps }) {
       <CardFooter>
         <div className="flex justify-end w-full">
           <button onClick={handleDeleteCustomer}>
-            <FiTrash />
+            <FiTrash size={24} color="red" />
           </button>
         </div>
       </CardFooter>
