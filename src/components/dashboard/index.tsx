@@ -7,7 +7,7 @@ import {
 } from "@/components/ui/card";
 import Image from "next/image";
 import Avatar from "@/assets/avatar.png";
-import { FiDollarSign } from "react-icons/fi";
+import { FiDollarSign, FiUser } from "react-icons/fi";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { redirect } from "next/navigation";
@@ -85,12 +85,12 @@ export async function TabDashboard() {
             <CardTitle className="text-sm font-montserrat font-medium">
               Número de clientes
             </CardTitle>
-            <FiDollarSign />
+            <FiUser/>
           </CardHeader>
-          <CardDescription className="font-montserrat font-bold text-2xl px-4 text-black">
+          <CardDescription className=" flex justify-center items-center w-full font-montserrat font-bold text-2xl px-4 text-black">
             {customertotal}
           </CardDescription>
-          <CardFooter>número de clientes cadastrados</CardFooter>
+          <CardFooter className="text-xs md:text-sm">número de clientes cadastrados</CardFooter>
         </Card>
 
         <Card className="w-1/2  px-6">
@@ -100,7 +100,7 @@ export async function TabDashboard() {
             </CardTitle>
             <FiDollarSign />
           </CardHeader>
-          <CardDescription className="font-montserrat font-bold text-2xl px-4 text-black">
+          <CardDescription className=" flex justify-center items-center w-full font-montserrat font-bold text-2xl px-4 text-black">
             {serviceDone}
           </CardDescription>
           <CardFooter>número total de serviços realizados</CardFooter>

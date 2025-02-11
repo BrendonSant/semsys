@@ -24,7 +24,7 @@ export function CardInfo({ customer }: { customer: CustomerProps }) {
       console.log(response);
       router.refresh();
     } catch (error) {
-      console.log(error);
+      alert('O cliente não pode ser deletado!');
     }
   }
 

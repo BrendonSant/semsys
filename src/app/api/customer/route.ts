@@ -31,10 +31,14 @@ export async function DELETE(request: Request) {
         }
     })
 
+   
     if(findTicket) {
+        
         return NextResponse.json({ error: 'Cliente possui tickets ativos' },{
             status: 400
+            
         })
+        
     }
 
    try {
@@ -48,6 +52,7 @@ export async function DELETE(request: Request) {
     
    } catch (error) {
     console.log(error);
+   
     return NextResponse.json({ error: 'Failed delete customer' },{
         status: 400
     })
