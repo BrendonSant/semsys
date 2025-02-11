@@ -7,6 +7,7 @@ import { FiEdit, FiTrash, FiUserPlus } from "react-icons/fi";
 
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { DeleteService } from "@/components/deleteservice";
 
 export default async function Servicing() {
   const session = await getServerSession(authOptions);
@@ -24,9 +25,12 @@ export default async function Servicing() {
     },
   });
 
+  
+
   const customers = await prismaClient.customer.findMany({
     where: {
       userId: session.user.id,
+      
     },
   });
 
@@ -104,9 +108,7 @@ export default async function Servicing() {
                   <button>
                     <FiEdit color="#072e5a" size={24} />
                   </button>
-                  <button>
-                    <FiTrash color="red" size={24} />
-                  </button>
+                  <DeleteService service={service.id}/>
                 </div>
               </td>
             </tr>
