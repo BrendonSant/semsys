@@ -12,6 +12,7 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import prismaClient from "@/lib/prisma";
+import { ChartOverview } from "../chart";
 
 
 export async function TabDashboard() {
@@ -105,6 +106,7 @@ export async function TabDashboard() {
           <CardFooter>número total de serviços realizados</CardFooter>
         </Card>
       </div>
+     
       
     </div>
   );
