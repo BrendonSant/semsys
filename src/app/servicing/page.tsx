@@ -47,8 +47,8 @@ export default async function Servicing() {
             <th>Nome</th>
             <th>Cliente</th>
             <th className="  hidden lg:block">Data</th>
-            <th>Valor</th>
-            <th>Total</th>
+            <th className="mx-1">Valor</th>
+            <th className="mx-1">Total</th>
             <th className="  hidden lg:block">Pagamento </th>
             <th className="  hidden lg:block">Status</th>
             <th className="text-end">Ações</th>
@@ -68,7 +68,7 @@ export default async function Servicing() {
                   : "N/A"}
               </td>
               <td>{service.serviceprice}</td>
-              <td>{service.total}</td>
+              <td className="mx-1">{service.total}</td>
               <td className="hidden lg:block" >{service.payment}</td>
               <td className="hidden lg:block">
                 {service.status === "Realizado" && (
