@@ -52,7 +52,7 @@ export async function TabDashboard() {
   return (
     <div className="flex flex-col lg:flex-row mt-8 w-full justify-between gap-6 lg:gap-8">
       <Card className="w-full  lg:w-1/2 flex items-center justify-between ">
-        <div className="flex items-center py-4 px-8 ">
+        <div className="flex items-center py-4 px-2 ">
           <div>
             <Image
               src={session.user.image || Avatar}
@@ -63,19 +63,19 @@ export async function TabDashboard() {
             />
           </div>
           <CardHeader>
-            <CardTitle className="text-2xl font-montserrat font-bold">
+            <CardTitle className="text-sm md:text-2xl font-montserrat font-bold">
               {session.user.name}
             </CardTitle>
-            <CardDescription className="font-montserrat">
+            <CardDescription className="text-xs ">
               {session.user.email}
             </CardDescription>
           </CardHeader>
         </div>
-        <div className="flex flex-col items-center justify-center px-8">
-          <h2 className="font-montserrat font-bold text-2xl w-auto">
+        <div className="w-fit last:flex flex-col items-center justify-center px-8">
+          <h2 className="font-montserrat font-bold text-sm md:text-2xl w-auto">
             seja bem
           </h2>
-          <h2 className="font-montserrat font-bold text-2xl">vindo</h2>
+          <h2 className="font-montserrat font-bold text-sm md:text-2xl">vindo</h2>
         </div>
       </Card>
 
