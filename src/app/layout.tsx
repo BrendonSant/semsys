@@ -15,8 +15,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Dev Controle",
-  description: "Gerencie seus Atendimentos",
+  title: "semsys",
+  description: "Gerencie seus serviçoes e clientes",
 };
 
 export default function RootLayout({

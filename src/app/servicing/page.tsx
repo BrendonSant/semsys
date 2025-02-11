@@ -27,12 +27,6 @@ export default async function Servicing() {
 
   
 
-  const customers = await prismaClient.customer.findMany({
-    where: {
-      userId: session.user.id,
-      
-    },
-  });
 
   return (
     <Container>
