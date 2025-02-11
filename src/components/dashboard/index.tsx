@@ -12,8 +12,8 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import prismaClient from "@/lib/prisma";
-import ServiceChart from "../chart/charts";
-import { ServiceProps } from "@/util/servicing.type";
+import { ServiceChart } from "../chart/charts";
+
 
 
 export async function TabDashboard() {
@@ -48,11 +48,7 @@ export async function TabDashboard() {
     },
   });
 
-  const services = await prismaClient.ticket.findMany({
-    where:{
-      userId: session.user.id
-    }
-  })
+ 
 
   const serviceDone = service.length;
 
@@ -114,7 +110,7 @@ export async function TabDashboard() {
         </Card>
       </div>
       
-     
+     <ServiceChart/>
       
     </div>
   );

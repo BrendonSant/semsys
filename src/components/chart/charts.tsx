@@ -11,6 +11,11 @@ import {
 } from 'chart.js';
 import { ServiceProps } from '@/util/servicing.type'; // Ajuste o caminho conforme necessário
 
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth";
+import { redirect } from "next/navigation";
+import prismaClient from "@/lib/prisma";
+
 // Registra os componentes necessários do Chart.js
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
@@ -19,8 +24,22 @@ interface ServiceChartProps {
   services: ServiceProps[];
 }
 
-const ServiceChart: React.FC<ServiceChartProps> = ({ services }) => {
-  // Define os status a serem exibidos no gráfico
+export async function ServiceChart() {
+
+    const session = await getServerSession(authOptions);
+
+    if (!session || !session.user) {
+      redirect("/");
+    }
+  
+
+  const services = await prismaClient.ticket.findMany({
+    where:{
+      userId: session.user.id
+    }
+  })
+
+
   const statuses: ServiceProps['status'][] = [
     'Realizado',
     'Parado',
@@ -78,4 +97,3 @@ const ServiceChart: React.FC<ServiceChartProps> = ({ services }) => {
   );
 };
 
-export default ServiceChart;
