@@ -82,7 +82,7 @@ export function Header() {
             {/* Menu hambúrguer visível apenas no mobile */}
 
             <DropdownMenu>
-              <DropdownMenuTrigger onClick={handleDropDown} className="md:hidden focus:outline-none" >
+              <DropdownMenuTrigger asChild onClick={handleDropDown} className="md:hidden focus:outline-none" >
                 
                   
                     <svg
@@ -103,19 +103,19 @@ export function Header() {
                 
               </DropdownMenuTrigger>
               <DropdownMenuContent>
-                <DropdownMenuItem>
+                <DropdownMenuItem asChild>
                   <Link href={"/dashboard"}>Dashboard</Link>
                 </DropdownMenuItem>
-                <DropdownMenuItem>
+                <DropdownMenuItem asChild>
                   <Link href={"/servicing"}>Serviços</Link>
                 </DropdownMenuItem>
-                <DropdownMenuItem>
+                <DropdownMenuItem asChild>
                   <Link href={"/customers"}>Clientes</Link>
                 </DropdownMenuItem>
-                <DropdownMenuItem>
+                <DropdownMenuItem asChild>
                   <Link href={"/suppliers"}>Fornecedores</Link>
                 </DropdownMenuItem>
-                <DropdownMenuItem>
+                <DropdownMenuItem asChild>
                   <Link href={"/products"}>Produtos</Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem className="flex gap-1" onClick={handleLogout}>
