@@ -49,8 +49,8 @@ export default async function Servicing() {
             <th className="  hidden lg:block">Data</th>
             <th className="mx-1">Valor</th>
             <th className="mx-1">Total</th>
-            <th className="hidden lg:inline">Pagamento </th>
-            <th className="  hidden lg:inline">Status</th>
+            <th className="hidden lg:inline  lg:mx-8">Pagamento </th>
+            <th className="  hidden lg:inline  lg:mx-8">Status</th>
             <th className="text-end">Ações</th>
           </tr>
         </thead>
@@ -69,8 +69,8 @@ export default async function Servicing() {
               </td>
               <td>{service.serviceprice}</td>
               <td className="mx-1">{service.total}</td>
-              <td className="hidden lg:inline" >{service.payment}</td>
-              <td className="hidden lg:inline">
+              <td className="hidden lg:inline-block lg:mx-8" >{service.payment}</td>
+              <td className="hidden lg:inline-block  lg:mx-8">
                 {service.status === "Realizado" && (
                   <span
                     className="w-3 h-3 rounded-full bg-green-500 inline-block mr-1"
