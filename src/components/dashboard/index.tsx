@@ -110,7 +110,7 @@ export async function TabDashboard() {
         </Card>
       </div>
       
-     <ServiceChart/>
+     
       
     </div>
   );
