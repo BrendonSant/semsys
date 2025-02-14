@@ -90,3 +90,43 @@ export async function POST(request: Request) {
     
 
 }
+
+export async function PATCH(request: Request) {
+    const session = await getServerSession(authOptions);
+
+    if (!session || !session.user) {
+        return NextResponse.json({ error: 'Unauthorized' }, {
+            status: 401
+        });
+    }
+
+    const { id, name, price, description, userId } = await request.json();
+
+    if (!id) {
+        return NextResponse.json({ error: 'Product id not found' }, {
+            status: 400
+        });
+    }
+
+    try {
+        await prismaClient.product.update({
+            where: {
+                id: id as string
+            },
+            data: {
+                name,
+                price,
+                description,
+                userId: userId
+            }
+        });
+
+        return NextResponse.json({ message: 'Produto atualizado!' });
+
+    } catch (error) {
+        console.log(error);
+        return NextResponse.json({ error: 'Failed to update product' }, {
+            status: 400
+        });
+    }
+}

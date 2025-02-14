@@ -6,6 +6,7 @@ import { SheetCustomer } from "@/components/sheet";
 import prismaClient from "@/lib/prisma";
 
 import { TableProduct } from "@/components/tableproduct";
+import { FiUserPlus } from "react-icons/fi";
 
 
 export default async function Products() {
@@ -30,7 +31,8 @@ export default async function Products() {
           type="product"
           buttonname="Novo produto"
           title="Cadastro de produto"
-          userId={session.user.id}
+          Id={session.user.id}
+          icon={<FiUserPlus />}
         />
       </div>
       <table className="min-w-full my-2 ">

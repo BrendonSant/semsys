@@ -5,6 +5,7 @@ import { authOptions } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import { SheetCustomer } from "@/components/sheet";
 import prismaClient  from "@/lib/prisma";
+import { FiUserPlus } from "react-icons/fi";
 
 
 
@@ -29,7 +30,7 @@ export default async function Customers() {
         <h1 className="text-3xl font-bold font-sans text-mdblue-500">
           Clientes
         </h1>
-       <SheetCustomer type="customer" buttonname='Novo cliente' title="Cadastro de cliente" userId={session.user.id}/>
+       <SheetCustomer type="customer" buttonname='Novo cliente' title="Cadastro de cliente" icon={<FiUserPlus />} Id={session.user.id}/>
       </div>
 
       <div className="grid grid-cols-1  md:grid-cols-2 lg:grid-cols-3 gap-3 mt-2">

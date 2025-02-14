@@ -17,7 +17,7 @@ const schema = z.object({
 
 type FormData = z.infer<typeof schema>
 
-export function ProductForm ({userId,onClose}: {userId: string; onClose: () => void}){
+export function ProductForm ({Id,onClose,edit}: {Id: string; edit:Boolean; onClose: () => void}){
 
     const{register, handleSubmit, formState: {errors}}= useForm<FormData>({
             resolver: zodResolver(schema)
@@ -30,7 +30,7 @@ export function ProductForm ({userId,onClose}: {userId: string; onClose: () => v
             name: data.name,
             price: data.price,
             description: data.description,
-            userId: userId
+            userId: Id
            })
     
            router.refresh();

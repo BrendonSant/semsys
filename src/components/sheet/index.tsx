@@ -1,7 +1,7 @@
 'use client'
-import { useState } from "react";
+import { ReactNode, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { FiUserPlus } from "react-icons/fi";
+
 import {
   Sheet,
   SheetContent,
@@ -13,8 +13,9 @@ import { NewCustomerForm } from "@/components/forms/customer";
 import { SupplierForm } from '@/components/forms/suplliers'
 import { ProductForm } from "../forms/product";
 import { ServiForm } from "../forms/service";
+import { IconType } from "react-icons/lib";
 
-export function SheetCustomer({ userId,buttonname,title,type }: { userId: string; buttonname: string; title: string; type: string }) {
+export function SheetCustomer({ Id,buttonname,title,type,icon,edit }: { Id: string; buttonname: string | null; title: string; type: string ; icon: ReactNode; edit:Boolean}) {
   const [isSheetOpen, setIsSheetOpen] = useState(false);
 
   const toggleSheet = () => setIsSheetOpen((prev: boolean) => !prev);
@@ -22,10 +23,22 @@ export function SheetCustomer({ userId,buttonname,title,type }: { userId: string
   return (
     <>
       <Sheet open={isSheetOpen} onOpenChange={toggleSheet}>
-        <Button variant={"outline"} onClick={toggleSheet}>
-          <FiUserPlus />
+        {buttonname && (
+          <Button  variant={"outline"} onClick={toggleSheet}>
+          {icon}
           {buttonname}
         </Button>
+        )}
+
+         {!buttonname && (
+         <button  onClick={toggleSheet}>
+           {icon}
+         </button>
+         
+         
+       
+        )}
+        
 
         <SheetContent className="w-full md:w-1/2 ">
           <SheetHeader>
@@ -36,18 +49,19 @@ export function SheetCustomer({ userId,buttonname,title,type }: { userId: string
           <div className="mt-10">
             {type === "customer" ? (
               <NewCustomerForm
-              userId={userId}
+              userId={Id}
               onClose={() => setIsSheetOpen(false)}
             />
             ) : type === "supplier" ? (
               <SupplierForm
-              userId={userId}
+              userId={Id}
               onClose={() => setIsSheetOpen(false)}
             />
             ) : type === "product" ? (
               <ProductForm
-              userId={userId}
+              Id={Id}
               onClose={() => setIsSheetOpen(false)}
+              edit={edit}
             />
             ): type === "servicing" ? (
               <ServiForm/>

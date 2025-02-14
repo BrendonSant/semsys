@@ -1,16 +1,19 @@
-'use client'
+"use client";
 
-import { ProductProps } from "@/util/product.type"
+import { ProductProps } from "@/util/product.type";
 import { useRouter } from "next/navigation";
 import { FiEdit, FiTrash } from "react-icons/fi";
 import { api } from "@/lib/api";
+import { SheetCustomer } from "../sheet";
 
 
+export function TableProduct({ product }: { product: ProductProps }) {
+ 
+  const router = useRouter();
+ 
 
-export function TableProduct({ product  }: { product: ProductProps }) {
-    const router = useRouter();
 
-async function handleDeleteSProduct() {
+  async function handleDeleteSProduct() {
     try {
       const response = await api.delete(`/api/product`, {
         params: {
@@ -22,27 +25,26 @@ async function handleDeleteSProduct() {
     } catch (error) {
       console.log(error);
     }
-}
-    return(
-        <>
-        <tr className="text-left h-16 border-b-2 border-b-slate-200 last:border-b-0" key={product.id}>
+  }
+
+  return (
+    <>
+      <tr
+        className="text-left h-16 border-b-2 border-b-slate-200 last:border-b-0"
+        key={product.id}
+      >
         <td>{product.name}</td>
         <td>{product.price}</td>
         <td>{product.description}</td>
         <td className="text-right">
           <div className="flex justify-end gap-2">
-          <button >
-          <FiEdit color='#072e5a'size={24}/>
-          </button>
-          <button onClick={handleDeleteSProduct}>
-          <FiTrash color="red" size={24}/>
-          </button>
+          <SheetCustomer Id={product.id} title='Edite o produto' type='product' buttonname={''} edit={true} icon={<FiEdit color="blue"/>}  />
+            <button onClick={handleDeleteSProduct}>
+              <FiTrash color="red" size={18} />
+            </button>
           </div>
-          
-          
         </td>
       </tr>
-        </>
-        
-    )
+    </>
+  );
 }
