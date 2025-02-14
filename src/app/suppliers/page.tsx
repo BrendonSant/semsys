@@ -30,7 +30,7 @@ export default async function Suppliers(){
         <h1 className="text-3xl font-bold font-sans text-mdblue-500">
           Fornecedores
         </h1>
-       <SheetCustomer type="supplier" buttonname='Novo fornecedor' title="Cadastro de fornecedor" icon={<FiUserPlus />} Id={session.user.id}/>
+       <SheetCustomer type="supplier" buttonname='Novo fornecedor' title="Cadastro de fornecedor" icon={<FiUserPlus />} userId={session.user.id} id={""}/>
       </div>
 
       <div className="grid grid-cols-1  md:grid-cols-2 lg:grid-cols-3 gap-3 mt-2">

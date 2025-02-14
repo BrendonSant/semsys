@@ -23,7 +23,7 @@ const schema = z.object({
 
 type FormData = z.infer<typeof schema>
 
-export function SupplierForm ({userId,onClose}: {userId: string; onClose: () => void}){
+export function SupplierForm ({userId,onClose}: {userId: string | null; onClose: () => void}){
 
     const{register, handleSubmit, formState: {errors}}= useForm<FormData>({
             resolver: zodResolver(schema)

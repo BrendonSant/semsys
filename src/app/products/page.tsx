@@ -1,9 +1,9 @@
 import { Container } from "@/components/container";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
+import prismaClient from "@/lib/prisma";
 import { redirect } from "next/navigation";
 import { SheetCustomer } from "@/components/sheet";
-import prismaClient from "@/lib/prisma";
 
 import { TableProduct } from "@/components/tableproduct";
 import { FiUserPlus } from "react-icons/fi";
@@ -31,8 +31,11 @@ export default async function Products() {
           type="product"
           buttonname="Novo produto"
           title="Cadastro de produto"
-          Id={session.user.id}
+          userId={session.user.id}
           icon={<FiUserPlus />}
+          id={""}
+          
+          
         />
       </div>
       <table className="min-w-full my-2 ">

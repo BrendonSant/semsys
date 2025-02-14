@@ -38,7 +38,7 @@ export function TableProduct({ product }: { product: ProductProps }) {
         <td>{product.description}</td>
         <td className="text-right">
           <div className="flex justify-end gap-2">
-          <SheetCustomer Id={product.id} title='Edite o produto' type='product' buttonname={''} edit={true} icon={<FiEdit color="blue"/>}  />
+          <SheetCustomer userId={product.userId} id={product.id} title='Edite o produto' type='product' buttonname={''}  icon={<FiEdit color="blue"/>}  />
             <button onClick={handleDeleteSProduct}>
               <FiTrash color="red" size={18} />
             </button>

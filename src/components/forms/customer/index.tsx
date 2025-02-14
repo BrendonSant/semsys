@@ -23,7 +23,7 @@ const schema = z.object({
 
 type FormData = z.infer<typeof schema>
 
-export function NewCustomerForm({userId,onClose}: {userId: string; onClose: () => void}){
+export function NewCustomerForm({userId,onClose}: {userId: string | null; onClose: () => void}){
 
     
 
