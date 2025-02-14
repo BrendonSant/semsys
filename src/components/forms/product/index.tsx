@@ -1,14 +1,16 @@
 "use client";
 
 import { useForm } from "react-hook-form";
-import { z } from "zod";
+import { string, z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Input } from "../input";
 import { api } from "@/lib/api";
 import { useRouter } from "next/navigation";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { buscarProdutoID } from "@/app/products/actions/actions";
+
 import { ProductProps } from "@/util/product.type";
+import { useEffect } from "react";
+import { buscarProdutoID} from "@/app/products/actions";
 
 const schema = z.object({
   name: z.string().min(1, "O campo nome é obrigatorio!"),
@@ -27,48 +29,94 @@ export function ProductForm({
   userId: string | null;
   onClose: () => void;
 }) {
+
+  const isInsert = !(!id) ; 
+  
+
+  console.log(isInsert);
+
   const queryClient = useQueryClient();
 
-  const { data, isFetching: isFetchingCliente } = useQuery({
+ 
+
+  const { data: dataProduto, isFetching: isFetchingProduto } = useQuery({
     queryKey: ["produto_select", id],
-    queryFn: () => buscarProdutoID(id || ""),
+    queryFn: () => buscarProdutoID(id,userId),
+    enabled: !!id, // Só executa a query se `id` for válido
   });
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<FormData>({
-    resolver: zodResolver(schema),
-  });
+  
+  
+
+  console.log(dataProduto);
+const  produtos = useForm<ProductProps>({
+  defaultValues: {
+    id:"",
+    name:'',
+    price:'',
+    description:'',
+    userId,
+  },
+  resolver: zodResolver(schema),
+});
+
+const {
+  setValue,
+  getValues,
+  handleSubmit,
+  formState: { errors },
+} = produtos
+
+
+  
 
   const router = useRouter();
 
-  async function handleRegisterSupplier(data: FormData) {
-    await api.post("/api/product", {
-      name: data.name,
-      price: data.price,
-      description: data.description,
-      userId: userId,
-    });
 
-    router.refresh();
-    router.replace("/products");
-    onClose();
-  }
+
+
+
+  async function handleRegisterProduct(data: ProductProps) {
+
+  
+      await api.post("/api/product", {
+        name: data.name,
+        price: data.price,
+        description: data.description,
+        userId: userId,
+      });
+  
+      router.refresh();
+      router.replace("/products");
+      onClose();
+
+    }
+  
+    
+  
+
+  useEffect(() => {
+    if (dataProduto) {
+      produtos.reset(dataProduto);
+    }
+  }, [dataProduto])
+
 
   return (
+    
     <form
       className="flex flex-col w-full"
-      onSubmit={handleSubmit(handleRegisterSupplier)}
+      onSubmit={handleSubmit(handleRegisterProduct)}
     >
       <label className="mt-3">Nome do produto:</label>
       <Input
         type="text"
-        name="name"
+       
         placeholder="Digite o nome do produto."
         error={errors.name?.message}
-        register={register}
+        name="name"
+        register={produtos.register}
+        
       />
       <label className="mt-3">Valor</label>
       <Input
@@ -76,7 +124,7 @@ export function ProductForm({
         name="price"
         placeholder="Digite o valor do produto."
         error={errors.price?.message}
-        register={register}
+        register={produtos.register}
       />
       <label className="mt-3">Descrição</label>
       <Input
@@ -84,7 +132,7 @@ export function ProductForm({
         name="description"
         placeholder="Digite a descrição do produto."
         error={errors.description?.message}
-        register={register}
+        register={produtos.register}
       />
 
       <button
