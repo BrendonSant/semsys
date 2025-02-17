@@ -94,3 +94,45 @@ export async function POST(request: Request) {
     
 
 }
+
+export async function PATCH(request: Request) {
+    const session = await getServerSession(authOptions);
+
+    if (!session || !session.user) {
+        return NextResponse.json({ error: 'Unauthorized' }, {
+            status: 401
+        });
+    }
+
+    const { id,name, email,phone,address,document,userId } = await request.json();
+
+    if (!id) {
+        return NextResponse.json({ error: 'Client id not found' }, {
+            status: 400
+        });
+    }
+
+    try {
+        await prismaClient.customer.update({
+            where: {
+                id: id as string
+            },
+            data: {
+                name,
+                email,
+                phone,
+                address: address || '',
+                document,
+                userId: userId
+            }
+        });
+
+        return NextResponse.json({ message: 'Cliente  atualizado!' });
+
+    } catch (error) {
+        console.log(error);
+        return NextResponse.json({ error: 'Failed to update customer' }, {
+            status: 400
+        });
+    }
+}

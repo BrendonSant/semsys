@@ -50,7 +50,6 @@ export function ProductForm({
   
   
 
-  console.log(dataProduto);
 const  produtos = useForm<ProductProps>({
   defaultValues: {
     id:"",

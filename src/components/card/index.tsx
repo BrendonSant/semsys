@@ -9,8 +9,9 @@ import { FiEdit, FiTrash } from "react-icons/fi";
 import { CustomerProps } from "@/util/customer.type";
 import { api } from "@/lib/api";
 import { useRouter } from "next/navigation";
+import { SheetCustomer } from "../sheet";
 
-export function CardInfo({ customer }: { customer: CustomerProps }) {
+export function CardInfo({ customer,userId }: { customer: CustomerProps , userId:string }) {
 
   const router = useRouter();
 
@@ -33,7 +34,8 @@ export function CardInfo({ customer }: { customer: CustomerProps }) {
       <CardHeader>
         <div className="flex justify-between px-1">
           <div></div>
-          <FiEdit size={24} />
+          <SheetCustomer id={customer.id} buttonname={""} title="Edite o cliente" type="customer" icon={<FiEdit/>} userId={userId}/>
+          
         </div>
       </CardHeader>
       <CardContent className="flex flex-col items-start md:items-start ">
@@ -55,7 +57,7 @@ export function CardInfo({ customer }: { customer: CustomerProps }) {
       <CardFooter>
         <div className="flex justify-end w-full">
           <button onClick={handleDeleteCustomer}>
-            <FiTrash size={24} color="red" />
+            <FiTrash size={16} color="red" />
           </button>
         </div>
       </CardFooter>

@@ -54,6 +54,7 @@ export function SheetCustomer({
           <div className="mt-10">
             {type === "customer" ? (
               <NewCustomerForm
+                id={id}
                 userId={userId}
                 onClose={() => setIsSheetOpen(false)}
               />

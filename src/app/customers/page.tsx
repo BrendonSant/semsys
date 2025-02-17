@@ -37,7 +37,9 @@ export default async function Customers() {
        {customers.map((customer) => (
          <CardInfo 
          customer={customer} 
-         key={customer.id}/>
+         key={customer.id}
+         userId={session.user.id}
+         />
        ))}
        
       </div>

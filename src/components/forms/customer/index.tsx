@@ -6,6 +6,10 @@ import {zodResolver} from '@hookform/resolvers/zod'
 import { Input } from '../input'
 import {api} from '@/lib/api'
 import {useRouter} from 'next/navigation'
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { buscarClienteID } from '@/app/customers/actions'
+import { CustomerProps } from '@/util/customer.type'
+import { useEffect } from 'react'
 
 const schema = z.object({
     name: z.string().min(1,"O campo nome é obrigatorio!"),
@@ -23,17 +27,52 @@ const schema = z.object({
 
 type FormData = z.infer<typeof schema>
 
-export function NewCustomerForm({userId,onClose}: {userId: string | null; onClose: () => void}){
+export function NewCustomerForm({userId,id,onClose}: {id:string|null,userId: string | null; onClose: () => void}){
 
-    
+    const isInsert = !(!id) ; 
 
-    const{register, handleSubmit, formState: {errors}}= useForm<FormData>({
-        resolver: zodResolver(schema)
-    })
+    const queryClient = useQueryClient();
+
+    const { data: dataCliente, isFetching: isFetchingCliente } = useQuery({
+        queryKey: ["cliente_select", id],
+        queryFn: () => buscarClienteID(id,userId),
+        enabled: !!id, // Só executa a query se `id` for válido
+      });
+
+
+      const  customer = useForm<CustomerProps>({
+        defaultValues: {
+            id:'',
+            name:'',
+            phone:'',
+            email:'',
+            address:'',
+            document:'',
+            create_at:null,
+            update_at:null,
+            userId,
+        },
+        resolver: zodResolver(schema),
+      });
+
+
+
+      const {
+        setValue,
+        getValues,
+        handleSubmit,
+        formState: { errors },
+      } = customer
 
     const router = useRouter()
 
-    async function handleRegisterCustomer(data: FormData){
+    useEffect(() => {
+        if (dataCliente) {
+          customer.reset(dataCliente);
+        }
+      }, [dataCliente])
+
+    async function handleRegisterCustomer(data: CustomerProps){
        await api.post('/api/customer', {
         name: data.name,
         email: data.email,
@@ -55,35 +94,35 @@ export function NewCustomerForm({userId,onClose}: {userId: string | null; onClos
              name='name' 
              placeholder='Digite o nome completo.'
              error={errors.name?.message}
-             register={register}
+             register={customer.register}
              />
               <label className='mt-3'>Email: </label>
             <Input type='email'
              name='email' 
              placeholder='Digite um email valido.'
              error={errors.email?.message}
-             register={register}
+             register={customer.register}
              />
                <label className='mt-3'>Celular: </label>
             <Input type='text'
              name='phone' 
              placeholder='Digite o número do celular'
              error={errors.phone?.message}
-             register={register}
+             register={customer.register}
              />
               <label className='mt-3'>Documento: </label>
             <Input type='number'
              name='document' 
              placeholder='Digite o CPF'
              error={errors.document?.message}
-             register={register}
+             register={customer.register}
              />
               <label className='mt-3'>Endereço </label>
             <Input type='text'
              name='address' 
              placeholder='Digite o número do celular'
              error={errors.address?.message}
-             register={register}
+             register={customer.register}
              />
 
              <button className='bg-mdblue-500 my-4 px-2 h-11 rounded-sm text-white font-montserrat font-bold hover:bg-mblue-500 transition-all duration-500'
