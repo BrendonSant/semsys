@@ -63,7 +63,7 @@ export default async function Servicing() {
             >
               <td>{service.name}</td>
               <td>{service.customer?.name}</td>
-              <td className="hidden lg:block">
+              <td className="hidden lg:block lg:mt-5">
                 {service.create_at
                   ? service.create_at.toLocaleDateString()
                   : "N/A"}
