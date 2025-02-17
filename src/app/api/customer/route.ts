@@ -1,134 +1,146 @@
-import { NextResponse } from 'next/server'
+import { NextResponse } from "next/server";
 
-import { getServerSession } from 'next-auth'
+import { getServerSession } from "next-auth";
 
-import { authOptions } from '@/lib/auth'
+import { authOptions } from "@/lib/auth";
 
-import prismaClient from '@/lib/prisma'
+import prismaClient from "@/lib/prisma";
 
 export async function DELETE(request: Request) {
+  const session = await getServerSession(authOptions);
 
-    const session = await getServerSession(authOptions);
+  if (!session || !session.user) {
+    return NextResponse.json(
+      { error: "Unauthorized" },
+      {
+        status: 401,
+      }
+    );
+  }
 
-    if(!session || !session.user) {
-        return NextResponse.json({ error: 'Unauthorized' },{
-            status: 401
-        })
-    }
+  const { searchParams } = new URL(request.url);
+  const userId = searchParams.get("id");
 
-    const {searchParams} = new URL(request.url);
-    const userId = searchParams.get('id');
+  if (!userId) {
+    return NextResponse.json(
+      { error: "User id not found" },
+      {
+        status: 400,
+      }
+    );
+  }
 
-    if(!userId) {
-        return NextResponse.json({ error: 'User id not found' },{
-            status: 400
-        })
-    }
+  const findTicket = await prismaClient.ticket.findFirst({
+    where: {
+      customerId: userId,
+    },
+  });
 
-    const findTicket = await prismaClient.ticket.findFirst({
-        where: {
-            customerId: userId
-        }
-    })
+  if (findTicket) {
+    return NextResponse.json(
+      { error: "Cliente possui tickets ativos" },
+      {
+        status: 400,
+      }
+    );
+  }
 
-   
-    if(findTicket) {
-        
-        return NextResponse.json({ error: 'Cliente possui tickets ativos' },{
-            status: 400
-            
-        })
-        
-    }
-
-   try {
+  try {
     await prismaClient.customer.delete({
-        where: {
-            id: userId as string
-        }
-    })
+      where: {
+        id: userId as string,
+      },
+    });
 
-    return NextResponse.json({ message: 'Cliente deletado!'});
-    
-   } catch (error) {
+    return NextResponse.json({ message: "Cliente deletado!" });
+  } catch (error) {
     console.log(error);
-   
-    return NextResponse.json({ error: 'Failed delete customer' },{
-        status: 400
-    })
-   }
+
+    return NextResponse.json(
+      { error: "Failed delete customer" },
+      {
+        status: 400,
+      }
+    );
+  }
 }
 
 export async function POST(request: Request) {
+  const session = await getServerSession(authOptions);
 
-    const session = await getServerSession(authOptions);
+  if (!session || !session.user) {
+    return NextResponse.json(
+      { error: "Unauthorized" },
+      {
+        status: 401,
+      }
+    );
+  }
 
-    if(!session || !session.user) {
-        return NextResponse.json({ error: 'Unauthorized' },{
-            status: 401
-        })
-    }
+  const { name, email, phone, address, document, userId } =
+    await request.json();
 
-    const { name, email,phone,address,document,userId } = await request.json();
+  try {
+    await prismaClient.customer.create({
+      data: {
+        name,
+        email,
+        phone,
+        address: address || "",
+        document,
+        userId: userId,
+      },
+    });
 
-    try {
-
-        await prismaClient.customer.create({
-            data: {
-                name,
-                email,
-                phone,
-                address: address || '',
-                document,
-                userId: userId
-            }
-        })
-
-        return NextResponse.json({ message: 'Cliente cadastrado!' })
-        
-    } catch (error) {
-        return NextResponse.json({ error: 'Failed create new customer' },{
-            status: 400
-        })
-    }
-    
-
+    return NextResponse.json({ message: "Cliente cadastrado!" });
+  } catch (error) {
+    return NextResponse.json(
+      { error: "Failed create new customer" },
+      {
+        status: 400,
+      }
+    );
+  }
 }
 
 export async function PATCH(request: Request) {
-    const session = await getServerSession(authOptions);
+  const session = await getServerSession(authOptions);
 
-   
+  const { id, name, email, phone, address, document, userId } =
+    await request.json();
 
-    const { id,name, email,phone,address,document,userId } = await request.json();
+  if (!id) {
+    return NextResponse.json(
+      { error: "Client id not found" },
+      {
+        status: 400,
+      }
+    );
+  }
 
-    if (!id) {
-        return NextResponse.json({ error: 'Client id not found' }, {
-            status: 400
-        });
-    }
+  try {
+    await prismaClient.customer.update({
+      where: {
+        id: id as string,
+      },
+      data: {
+        name,
+        email,
+        phone,
+        address: address || "",
+        document,
+        userId: userId,
+      },
+    });
 
-    try {
-        await prismaClient.customer.update({
-            where: {
-                id: id as string
-            },
-            data: {
-                name,
-                email,
-                phone,
-                address: address || '',
-                document,
-                userId: userId
-            }
-        });
-
-        return NextResponse.json({ message: 'Cliente  atualizado!' });
-
-    } catch (error) {
-        console.log(error);
-        return NextResponse.json({ error: 'Failed to update customer' }, {
-            status: 400
-        });
-    }
+    return NextResponse.json({ message: "Cliente  atualizado!" });
+  } catch (error) {
+    console.log(error);
+    return NextResponse.json(
+      { error: "Failed to update customer" },
+      {
+        status: 400,
+      }
+    );
+  }
 }

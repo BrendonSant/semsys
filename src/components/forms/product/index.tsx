@@ -29,101 +29,74 @@ export function ProductForm({
   userId: string | null;
   onClose: () => void;
 }) {
-
-  const isInsert = !(!id) ; 
-  
+  const isInsert = !!id;
 
   console.log(isInsert);
 
   const queryClient = useQueryClient();
 
- 
-
   const { data: dataProduto, isFetching: isFetchingProduto } = useQuery({
     queryKey: ["produto_select", id],
-    queryFn: () => buscarProdutoID(id,userId),
+    queryFn: () => buscarProdutoID(id, userId),
     enabled: !!id, // Só executa a query se `id` for válido
   });
 
+  const produtos = useForm<ProductProps>({
+    defaultValues: {
+      id: "",
+      name: "",
+      price: "",
+      description: "",
+      userId,
+    },
+    resolver: zodResolver(schema),
+  });
 
-  
-  
-  
-
-const  produtos = useForm<ProductProps>({
-  defaultValues: {
-    id:"",
-    name:'',
-    price:'',
-    description:'',
-    userId,
-  },
-  resolver: zodResolver(schema),
-});
-
-const {
-  setValue,
-  getValues,
-  handleSubmit,
-  formState: { errors },
-} = produtos
-
-
-  
+  const {
+    setValue,
+    getValues,
+    handleSubmit,
+    formState: { errors },
+  } = produtos;
 
   const router = useRouter();
 
-
-  const {mutateAsync:editaprodutoFn} = useMutation({
-    mutationKey: ['editar_produto'],
+  const { mutateAsync: editaprodutoFn } = useMutation({
+    mutationKey: ["editar_produto"],
     mutationFn: (data: ProductProps) => editarproduto(data, id, userId),
-    onSuccess:async (response) => {
-      console.log("Produto editado!")
-      alert('Produto editado com sucesso!')
+    onSuccess: async (response) => {
+      console.log("Produto editado!");
+      alert("Produto editado com sucesso!");
       router.refresh();
-        router.replace("/products");
-        onClose();
-    }
-  })
-
-
-
-
+      router.replace("/products");
+      onClose();
+    },
+  });
 
   async function handleRegisterProduct(data: ProductProps) {
+    if (id) {
+      editaprodutoFn(data);
+    } else {
+      await api.post("/api/product", {
+        name: data.name,
+        price: data.price,
+        description: data.description,
+        userId: userId,
+      });
 
-      if(id){
-        editaprodutoFn(data)
-      }else{
-        await api.post("/api/product", {
-          name: data.name,
-          price: data.price,
-          description: data.description,
-          userId: userId,
-        });
-    
-        router.refresh();
-        router.replace("/products");
-        onClose();
-      }
-
-  
-      
-
+      router.refresh();
+      router.replace("/products");
+      onClose();
     }
-  
-    
-  
+  }
 
   useEffect(() => {
     if (dataProduto) {
       produtos.reset(dataProduto);
     }
-  }, [dataProduto])
-
+  }, [dataProduto]);
 
   return (
-    
     <form
       className="flex flex-col w-full"
       onSubmit={handleSubmit(handleRegisterProduct)}
@@ -131,12 +104,10 @@ const {
       <label className="mt-3">Nome do produto:</label>
       <Input
         type="text"
-       
         placeholder="Digite o nome do produto."
         error={errors.name?.message}
         name="name"
         register={produtos.register}
-        
       />
       <label className="mt-3">Valor</label>
       <Input
