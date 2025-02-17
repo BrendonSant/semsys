@@ -10,7 +10,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 import { ProductProps } from "@/util/product.type";
 import { useEffect } from "react";
-import { buscarProdutoID} from "@/app/products/actions";
+import { buscarProdutoID, editarproduto } from "@/app/products/actions";
 
 const schema = z.object({
   name: z.string().min(1, "O campo nome é obrigatorio!"),
@@ -75,22 +75,41 @@ const {
   const router = useRouter();
 
 
+  const {mutateAsync:editaprodutoFn} = useMutation({
+    mutationKey: ['editar_produto'],
+    mutationFn: (data: ProductProps) => editarproduto(data, id, userId),
+    onSuccess:async (response) => {
+      console.log("Produto editado!")
+      alert('Produto editado com sucesso!')
+      router.refresh();
+        router.replace("/products");
+        onClose();
+    }
+  })
+
+
 
 
 
   async function handleRegisterProduct(data: ProductProps) {
 
+      if(id){
+        editaprodutoFn(data)
+      }else{
+        await api.post("/api/product", {
+          name: data.name,
+          price: data.price,
+          description: data.description,
+          userId: userId,
+        });
+    
+        router.refresh();
+        router.replace("/products");
+        onClose();
+      }
+
   
-      await api.post("/api/product", {
-        name: data.name,
-        price: data.price,
-        description: data.description,
-        userId: userId,
-      });
-  
-      router.refresh();
-      router.replace("/products");
-      onClose();
+      
 
     }
   
