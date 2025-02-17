@@ -110,7 +110,7 @@ export function NewCustomerForm({
       });
 
       router.refresh();
-      router.replace("/customers");
+      
       onClose();
     }
   }

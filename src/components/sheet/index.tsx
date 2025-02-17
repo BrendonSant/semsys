@@ -59,7 +59,7 @@ export function SheetCustomer({
                 onClose={() => setIsSheetOpen(false)}
               />
             ) : type === "supplier" ? (
-              <SupplierForm userId={userId} onClose={() => setIsSheetOpen(false)} />
+              <SupplierForm id={id} userId={userId} onClose={() => setIsSheetOpen(false)} />
             ) : type === "product" ? (
               <ProductForm userId={userId} id={id} onClose={() => setIsSheetOpen(false)} />
             ) : type === "servicing" ? (

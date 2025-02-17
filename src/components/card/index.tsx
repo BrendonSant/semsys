@@ -34,7 +34,7 @@ export function CardInfo({ customer,userId }: { customer: CustomerProps , userId
       <CardHeader>
         <div className="flex justify-between px-1">
           <div></div>
-          <SheetCustomer id={customer.id} buttonname={""} title="Edite o cliente" type="customer" icon={<FiEdit/>} userId={userId}/>
+          <SheetCustomer id={customer.id} buttonname={""} title="Edite o cliente" type="customer" icon={<FiEdit color="blue"/>} userId={userId}/>
           
         </div>
       </CardHeader>
