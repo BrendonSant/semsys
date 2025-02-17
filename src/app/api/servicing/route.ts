@@ -86,3 +86,52 @@ export async function POST(request: Request) {
     
 
 }
+
+//##################################################################################
+
+
+
+export async function PATCH(request: Request) {
+    const session = await getServerSession(authOptions);
+  
+    const { id,name,description,payment,status,serviceprice,total,customerId,supplierId,productId,userId } = await request.json();
+  
+    if (!id) {
+      return NextResponse.json(
+        { error: "Servicing id not found" },
+        {
+          status: 400,
+        }
+      );
+    }
+  
+    try {
+      await prismaClient.ticket.update({
+        where: {
+          id: id as string,
+        },
+        data: {
+            name,
+            description,
+            payment,
+            status,
+            serviceprice,
+            total,
+            customerId: customerId,
+            supplierId: supplierId,
+            productId: productId,
+            userId: userId
+        },
+      });
+  
+      return NextResponse.json({ message: "Serviço  atualizado!" });
+    } catch (error) {
+      console.log(error);
+      return NextResponse.json(
+        { error: "Failed to update servicing" },
+        {
+          status: 400,
+        }
+      );
+    }
+  }

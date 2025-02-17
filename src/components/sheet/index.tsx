@@ -63,7 +63,7 @@ export function SheetCustomer({
             ) : type === "product" ? (
               <ProductForm userId={userId} id={id} onClose={() => setIsSheetOpen(false)} />
             ) : type === "servicing" ? (
-              <ServiForm />
+              <ServiForm id={id}  userId={userId} onClose={() => setIsSheetOpen(false)} />
             ) : null}
           </div>
         </SheetContent>

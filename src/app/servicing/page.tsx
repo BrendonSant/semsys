@@ -8,6 +8,7 @@ import { FiEdit, FiTrash, FiUserPlus } from "react-icons/fi";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { DeleteService } from "@/components/deleteservice";
+import { SheetCustomer } from "@/components/sheet";
 
 export default async function Servicing() {
   const session = await getServerSession(authOptions);
@@ -99,9 +100,8 @@ export default async function Servicing() {
               </td>
               <td className="text-right">
                 <div className="flex justify-end gap-2">
-                  <button>
-                    <FiEdit color="#072e5a" size={24} />
-                  </button>
+                  <SheetCustomer id={service.id} userId={session.user.id} icon={<FiEdit/>} buttonname={''}
+                  type="servicing" title="Edite o serviço"/>
                   <DeleteService service={service.id}/>
                 </div>
               </td>
