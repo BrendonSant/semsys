@@ -7,7 +7,7 @@ import { Input } from '../input'
 import {api} from '@/lib/api'
 import {useRouter} from 'next/navigation'
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { buscarClienteID } from '@/app/customers/actions'
+import { buscarClienteID, editarCustomer } from '@/app/customers/actions'
 import { CustomerProps } from '@/util/customer.type'
 import { useEffect } from 'react'
 
@@ -56,6 +56,19 @@ export function NewCustomerForm({userId,id,onClose}: {id:string|null,userId: str
       });
 
 
+      const {mutateAsync:editCustomerFn} = useMutation({
+          mutationKey: ['editar_cliente'],
+          mutationFn: (data: CustomerProps) => editarCustomer(data, id, userId),
+          onSuccess:async (response) => {
+            console.log("Cliente editado!")
+            alert('Cliente editado com sucesso!')
+            router.refresh();
+              router.replace("/customers");
+              onClose();
+          }
+        })
+
+
 
       const {
         setValue,
@@ -73,18 +86,24 @@ export function NewCustomerForm({userId,id,onClose}: {id:string|null,userId: str
       }, [dataCliente])
 
     async function handleRegisterCustomer(data: CustomerProps){
-       await api.post('/api/customer', {
-        name: data.name,
-        email: data.email,
-        phone: data.phone,
-        document: data.document,
-        address: data.address,
-        userId: userId
-       })
 
-       router.refresh();
-       router.replace('/customers')
-       onClose();
+        if(id){
+            editCustomerFn(data)
+        }else{
+            await api.post('/api/customer', {
+                name: data.name,
+                email: data.email,
+                phone: data.phone,
+                document: data.document,
+                address: data.address,
+                userId: userId
+               })
+        
+               router.refresh();
+               router.replace('/customers')
+               onClose();
+        }
+       
     }
 
     return(
