@@ -25,7 +25,7 @@ export default async function Dashboard() {
         <TabsContent className="w-full" value="account">
           <TabDashboard/>
         </TabsContent>
-        <TabsContent value="password">Change your password here.</TabsContent>
+        <TabsContent value="password">Relatórios futuros</TabsContent>
       </Tabs>
     </Container>
   );

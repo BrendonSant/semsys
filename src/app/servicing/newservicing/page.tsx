@@ -3,8 +3,9 @@ import { authOptions } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import prismaClient from "@/lib/prisma";
 import { Container } from "@/components/container";
-import { FiArrowLeft } from "react-icons/fi";
+import { FiArrowLeft, FiPlus } from "react-icons/fi";
 import Link from "next/link";
+import { SheetCustomer } from "@/components/sheet";
 
 export default async function NewServices() {
   const session = await getServerSession(authOptions);
@@ -70,8 +71,8 @@ export default async function NewServices() {
         serviceprice: value as string,
         payment: payment as string,
         status: status as string,
-        productId: product as string || null,
-        supplierId: supplier as string || null,
+        productId: (product as string) || null,
+        supplierId: (supplier as string) || null,
         total: total.toFixed(2).toString(),
         userId: session?.user.id,
       },
@@ -84,11 +85,9 @@ export default async function NewServices() {
     <>
       <Container>
         <div className="w-full flex justify-start ">
-          <Link href={'/servicing'}>
-          <FiArrowLeft size={32} color="#072E5A"/>
-          
+          <Link href={"/servicing"}>
+            <FiArrowLeft size={32} color="#072E5A" />
           </Link>
-          
         </div>
         <div className="mt-10">
           <div className="w-full flex flex-col">
@@ -110,20 +109,34 @@ export default async function NewServices() {
                   />
                 </div>
 
-                <div className="flex flex-col w-full md:w-1/2">
-                  <label className="mb-1 font-medium text-lg" htmlFor="">
-                    Selecione o cliente
-                  </label>
-                  <select
-                    name="customer"
-                    className="w-full border border-gray-300 px-2 rounded-md h-11 mb-2"
-                  >
-                    {customers.map((customers) => (
-                      <option key={customers.id} value={customers.id}>
-                        {customers.name}
-                      </option>
-                    ))}
-                  </select>
+                <div className="flex w-full justify-center items-center md:w-1/2">
+                  <div className="flex flex-col w-full">
+                    <label className="mb-1 font-medium text-lg" htmlFor="">
+                      Selecione o cliente
+                    </label>
+                    <div className="flex justify-center items-center gap-2 h-auto">
+                      <select
+                        name="customer"
+                        className="w-full border border-gray-300 px-2 rounded-md h-11 mb-2"
+                      >
+                        {customers.map((customers) => (
+                          <option key={customers.id} value={customers.id}>
+                            {customers.name}
+                          </option>
+                        ))}
+                      </select>
+                      <div>
+                        <SheetCustomer
+                          id={""}
+                          userId={session.user.id}
+                          buttonname={""}
+                          icon={<FiPlus size={24} color="blue" />}
+                          title="Cadastre um cliente"
+                          type="customer"
+                        />
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
 
@@ -180,6 +193,7 @@ export default async function NewServices() {
                   <label className="mb-1 font-medium text-lg" htmlFor="">
                     Selecione o produto
                   </label>
+                  <div className="flex justify-center items-center h-auto gap-2">
                   <select
                     name="product"
                     className="w-full border border-gray-300 px-2 rounded-md h-11 mb-2"
@@ -192,12 +206,27 @@ export default async function NewServices() {
                       </option>
                     ))}
                   </select>
+                  <div>
+                        <SheetCustomer
+                          id={""}
+                          userId={session.user.id}
+                          buttonname={""}
+                          icon={<FiPlus size={24} color="blue" />}
+                          title="Cadastre um produto"
+                          type="product"
+                        />
+                      </div>
+
+                  </div>
+                  
                 </div>
 
                 <div className="flex flex-col w-full md:w-1/2">
                   <label className="mb-1 font-medium text-lg" htmlFor="">
                     Selecione o fornecedor
                   </label>
+
+                  <div className="flex justify-center items-center h-auto gap-2">
                   <select
                     name="supplier"
                     className="w-full border border-gray-300 px-2 rounded-md h-11 mb-2"
@@ -210,6 +239,19 @@ export default async function NewServices() {
                       </option>
                     ))}
                   </select>
+                  <div>
+                        <SheetCustomer
+                          id={""}
+                          userId={session.user.id}
+                          buttonname={""}
+                          icon={<FiPlus size={24} color="blue" />}
+                          title="Cadastre um fornecedor"
+                          type="supplier"
+                        />
+                      </div>
+
+                  </div>
+                 
                 </div>
               </div>
 
