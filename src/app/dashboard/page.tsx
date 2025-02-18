@@ -10,6 +10,8 @@ export default async function Dashboard() {
   if (!session || !session.user){
     redirect('/')
   }
+
+  
   return (
     <Container>
       <div className="flex w-full mt-10 mb-6">
