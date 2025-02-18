@@ -26,6 +26,21 @@ export async function buscaProdutos(userId:string | null){
     return products ;
 }
 
+export async function buscaProdutoID(userId:string | null , product:string ){
+  const product_ticket = await prismaClient.product.findFirst({
+      where:{
+          userId: userId,
+          id: product,
+
+      },
+      select:{
+        price:true
+      }
+  })
+
+  return product_ticket ;
+}
+
 
 export async function buscaFornecedores(userId:string | null){
     const suppliers = await prismaClient.supplier.findMany({
@@ -75,7 +90,7 @@ export async function buscarServiceID(
           serviceprice:data.serviceprice,
           total: data.total,
           customerId: data.customerId,
-          suplierId: data.supplierId,
+          supplierId: data.supplierId,
           productId: data.productId, 
           userId: userId
         },
