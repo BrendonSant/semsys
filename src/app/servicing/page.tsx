@@ -44,7 +44,7 @@ export default async function Servicing() {
 
   
 
-
+console.log('teste');
   return (
     <Container>
       <div className="flex w-full justify-between  mt-10 mb-4">
