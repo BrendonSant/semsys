@@ -76,7 +76,7 @@ export function NewCustomerForm({
       console.log("Cliente editado!");
       alert("Cliente editado com sucesso!");
       router.refresh();
-      router.replace("/customers");
+      
       onClose();
     },
   });

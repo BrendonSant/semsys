@@ -83,7 +83,7 @@ export function SupplierForm({
       console.log("Cliente editado!");
       alert("Cliente editado com sucesso!");
       router.refresh();
-      router.replace("/suppliers");
+      
       onClose();
     },
   });

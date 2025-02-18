@@ -68,7 +68,7 @@ export function ProductForm({
       console.log("Produto editado!");
       alert("Produto editado com sucesso!");
       router.refresh();
-      router.replace("/products");
+      
       onClose();
     },
   });
@@ -85,7 +85,7 @@ export function ProductForm({
       });
 
       router.refresh();
-      router.replace("/products");
+     
       onClose();
     }
   }
