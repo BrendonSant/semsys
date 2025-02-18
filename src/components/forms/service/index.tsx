@@ -7,7 +7,6 @@ import { Input } from "../input";
 import { api } from "@/lib/api";
 import { useRouter } from "next/navigation";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { Controller } from "react-hook-form";
 
 import { useEffect } from "react";
 import { Container } from "@/components/container";
