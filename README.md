@@ -135,6 +135,64 @@ const service = await prismaClient.ticket.findMany({
 });
 ```
 
+# Utilizando React Query no SEMSYS
+
+No projeto, utilizei o [React Query](https://tanstack.com/query/latest) para facilitar o gerenciamento de requisições assíncronas e o cache dos dados. A seguir, um trecho de código que exemplifica como buscar dados de produtos e fornecedores, além de executar uma mutação para editar um serviço:
+
+```tsx
+const { data: products } = useQuery({
+  queryKey: ["busca_produtos", userId],
+  queryFn: () => buscaProdutos(userId),
+  enabled: !!userId,
+});
+
+const { data: suppliers } = useQuery({
+  queryKey: ["busca_fornecedores", userId],
+  queryFn: () => buscaFornecedores(userId),
+  enabled: !!userId,
+});
+
+const { mutateAsync: editServiceFn } = useMutation({
+  mutationKey: ["editar_serviço"],
+  mutationFn: (data: ServiceProps) => editarService(data, id, userId),
+  onSuccess: async (response) => {
+    console.log("Cliente editado!");
+    alert("Cliente editado com sucesso!");
+    router.refresh();
+    onClose();
+  },
+});
+```
+
+# Explicação do Código
+
+## useQuery
+- **Esse hook** é utilizado para buscar dados de forma assíncrona.
+- **queryKey:**  
+  Um identificador único para a query, que pode incluir variáveis (como `userId`) para garantir a singularidade e auxiliar no cache.
+- **queryFn:**  
+  A função que realiza a requisição, no caso, funções como `buscaProdutos(userId)` e `buscaFornecedores(userId)`.
+- **enabled:**  
+  Essa propriedade controla se a query deve ou não ser executada. Aqui, as queries serão executadas somente se o `userId` estiver definido (ou seja, se for truthy).
+
+## useMutation
+- **Esse hook** é usado para operações que modificam dados (como criação, atualização ou exclusão).
+- **mutationKey:**  
+  Identifica a mutação de forma única, permitindo que o React Query gerencie e otimize a atualização de dados.
+- **mutationFn:**  
+  A função que executa a mutação. No exemplo, ela chama a função `editarService` para atualizar um serviço específico.
+- **onSuccess:**  
+  Função de callback executada após a mutação ser bem-sucedida. Aqui, ela exibe uma mensagem no console, mostra um alerta, atualiza a interface com `router.refresh()` e executa a função `onClose` para, possivelmente, fechar um modal ou redirecionar o usuário.
+
+## Benefícios da Abordagem com React Query
+- **Gerenciamento de Estado e Cache:**  
+  O React Query facilita a manipulação de dados assíncronos, permitindo que o cache seja gerenciado automaticamente, evitando requisições desnecessárias e melhorando a performance da aplicação.
+- **Atualizações em Tempo Real:**  
+  Com hooks como `useMutation` e callbacks como `onSuccess`, a interface pode ser atualizada imediatamente após uma operação bem-sucedida, proporcionando uma experiência mais fluida para o usuário.
+- **Código Mais Organizado:**  
+  Ao separar as operações de leitura (`useQuery`) e escrita (`useMutation`), o código se torna mais modular e fácil de manter.
+
+
 ## Contribuição 🤝
 
 Contribuições são super bem-vindas! Se você tem alguma sugestão, correção ou melhoria, sinta-se à vontade para abrir uma _issue_ ou enviar um _pull request_. Sua colaboração é muito importante para nós! 🌟
