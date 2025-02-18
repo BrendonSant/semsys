@@ -100,7 +100,7 @@ export default async function Servicing() {
               </td>
               <td className="text-right">
                 <div className="flex justify-end gap-2">
-                  <SheetCustomer id={service.id} userId={session.user.id} icon={<FiEdit/>} buttonname={''}
+                  <SheetCustomer id={service.id} userId={session.user.id} icon={<FiEdit color="blue"/>} buttonname={''}
                   type="servicing" title="Edite o serviço"/>
                   <DeleteService service={service.id}/>
                 </div>

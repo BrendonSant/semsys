@@ -7,6 +7,7 @@ import { Input } from "../input";
 import { api } from "@/lib/api";
 import { useRouter } from "next/navigation";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { Controller } from "react-hook-form";
 
 import { useEffect } from "react";
 import { Container } from "@/components/container";
@@ -16,13 +17,14 @@ import {
   buscaFornecedores,
   buscaProdutos,
   buscarServiceID,
+  editarService,
 } from "@/app/servicing/newservicing/actions";
 import { ScrollArea } from "@/components/ui/scroll-area";
 
 const schema = z.object({
   name: z.string().min(1, "O campo nome é obrigatorio!"),
   description: z.string().min(1, "O campo descrição é obrigatorio!"),
-  serviceprice: z.number().min(1, "O campo preço do serviço é obrigatorio!"),
+  serviceprice: z.string().min(1, "O campo preço do serviço é obrigatorio!"),
 });
 
 type FormData = z.infer<typeof schema>;
@@ -75,9 +77,9 @@ export function ServiForm({
       update_at: null,
       serviceprice: "",
       total: "",
-      customerId: null,
-      supplierId: null,
-      productId: null,
+      customerId: "",
+      supplierId: "",
+      productId: "",
       userId,
     },
     resolver: zodResolver(schema),
@@ -101,7 +103,21 @@ export function ServiForm({
     enabled: !!userId,
   });
 
+
+  const { mutateAsync: editServiceFn } = useMutation({
+      mutationKey: ["editar_serviço"],
+      mutationFn: (data: ServiceProps) => editarService(data, id, userId),
+      onSuccess: async (response) => {
+        console.log("Cliente editado!");
+        alert("Cliente editado com sucesso!");
+        router.refresh();
+        
+        onClose();
+      },
+    });
+
   const {
+    register,
     setValue,
     getValues,
     handleSubmit,
@@ -112,9 +128,10 @@ export function ServiForm({
 
   async function handleRegisterService(data: ServiceProps) {
     if (id) {
-      // editCustomerFn(data);
+      console.log(data);
+       editServiceFn(data);
     } else {
-      await api.post("/api/customer", {
+      await api.post("/api/servicing", {
         name: data.name,
         descriptio: data.description,
         payment: data.payment,

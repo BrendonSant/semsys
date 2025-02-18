@@ -28,7 +28,7 @@ export function DeleteService({service}: {service:string}) {
   return (
     <>
       <button onClick={handleDeleteService}>
-        <FiTrash color="red" size={24} />
+        <FiTrash color="red" size={16} />
       </button>
     </>
   );
