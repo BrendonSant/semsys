@@ -1,5 +1,6 @@
 import { Container } from "@/components/container";
 import { TabDashboard } from "@/components/dashboard";
+import { Reports } from "@/components/reports";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { authOptions } from "@/lib/auth";
 import { getServerSession } from "next-auth";
@@ -22,15 +23,15 @@ export default async function Dashboard() {
       <Tabs defaultValue="account" className="w-full">
         <TabsList>
           <TabsTrigger value="account">Dashboard</TabsTrigger>
-          <TabsTrigger value="password">Relatorios</TabsTrigger>
+          <TabsTrigger value="reports">Relatorios</TabsTrigger>
         </TabsList>
         <TabsContent className="w-full" value="account">
           <TabDashboard/>
         </TabsContent>
-        <TabsContent value="password">Relatórios futuros</TabsContent>
+        <TabsContent value="reports">
+          <Reports/>
+        </TabsContent>
       </Tabs>
     </Container>
   );
 }
-////////teste
-console.log('teste')

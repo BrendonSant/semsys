@@ -21,7 +21,7 @@ import { useQueries } from "@tanstack/react-query";
 
 
 
-export function reports(){
+export function Reports(){
     return(
         <Container>
             <Card>
