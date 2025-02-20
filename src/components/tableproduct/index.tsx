@@ -34,7 +34,7 @@ export function TableProduct({ product }: { product: ProductProps }) {
         key={product.id}
       >
         <td>{product.name}</td>
-        <td>{product.price}</td>
+        <td>R$ {product.price}</td>
         <td>{product.description}</td>
         <td className="text-right">
           <div className="flex justify-end gap-2">

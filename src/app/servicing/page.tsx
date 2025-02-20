@@ -92,9 +92,9 @@ export default async function Servicing() {
                   ? new Date(service.create_at).toLocaleDateString()
                   : "N/A"}
               </td>
-              <td className="hidden lg:table-cell">{service.serviceprice}</td>
-              <td className="hidden lg:table-cell">{service.product?.price}</td>
-              <td >{service.total}</td>
+              <td className="hidden lg:table-cell">R$ {service.serviceprice}</td>
+              <td className="hidden lg:table-cell">R$ {service.product?.price}</td>
+              <td >R$ {service.total}</td>
               <td className="hidden lg:table-cell">{service.payment}</td>
               <td className="hidden lg:table-cell">
                 {service.status === "Realizado" && (

@@ -24,7 +24,8 @@ export function Reports({ customers }: { customers: CustomerProps[] }) {
     })),
   });
 
-  console.log(queries);
+  
+  const numTotalCustomers = customers.length
 
   return (
     <div className="flex flex-col lg:flex-row h-full w-full gap-4  mt-4 ">
@@ -42,7 +43,15 @@ export function Reports({ customers }: { customers: CustomerProps[] }) {
         <CardContent className="flex flex-col justify-center items-start w-full">
           <div className="flex justify-between w-full items-center ">
             <CardTitle className=" text-sm lg:text-lg min-w-fit">Total de clientes:</CardTitle>
-            <CardDescription className=" text-sm lg:text-lg">10</CardDescription>
+            <CardDescription className=" text-sm lg:text-lg">{numTotalCustomers}</CardDescription>
+          </div>
+          <div className="flex justify-between w-full items-center ">
+            <CardTitle className=" text-sm lg:text-lg min-w-fit">Total em Serviços:</CardTitle>
+            <CardDescription className=" text-sm lg:text-lg">R$ {numTotalCustomers}</CardDescription>
+          </div>
+          <div className="flex justify-between w-full items-center ">
+            <CardTitle className=" text-sm lg:text-lg min-w-fit">Total em Produtos:</CardTitle>
+            <CardDescription className=" text-sm lg:text-lg">R$ {numTotalCustomers}</CardDescription>
           </div>
         </CardContent>
       </Card>
