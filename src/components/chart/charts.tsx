@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useId } from "react";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -12,7 +12,7 @@ import {
   Legend,
   Filler,
 } from "chart.js";
-import { Bar } from "react-chartjs-2";
+import { Bar, Doughnut } from "react-chartjs-2";
 
 ChartJS.register(
   CategoryScale,
@@ -25,12 +25,30 @@ ChartJS.register(
   Filler
 );
 
+import {useQuery, useQueryClient } from "@tanstack/react-query";
+import { buscaDataChart } from "@/app/dashboard/actions";
 
 
 
 
 
-const MyBarChart = () => {
+
+
+export function MyBarChart({userId}:{userId : string})  {
+
+
+  const { data: dataChart } = useQuery({
+      queryKey: ["busca_clientes", userId],
+      queryFn: () => buscaDataChart(userId),
+      enabled: !!useId, // Só executa a query se `id` for válido
+    });
+
+
+    
+
+
+
+
   const labels = ["Não iniciado", "Executando", "Parado", "Realizado"];
   const datasets = [12, 45, 10, 43];
   const data = {
@@ -86,9 +104,10 @@ const MyBarChart = () => {
     <div className="flex w-full justify-center md:justify-start items-center px-4">
       <div className="h-[400px] w-full lg:w-1/2 md:h-[500px] mt-8">
         <Bar data={data} options={options} />
+        
       </div>
     </div>
   );
 };
 
-export default MyBarChart;
+

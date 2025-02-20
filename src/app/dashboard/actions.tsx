@@ -4,6 +4,7 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth"; // Ajuste para o caminho correto
 import prismaClient from "@/lib/prisma";
 import { redirect } from "next/navigation";
+import { string } from "zod";
 
 export async function buscaRelatorio(customer: CustomerProps){
 
@@ -128,4 +129,15 @@ export async function buscaValues(userId:string | null) {
       };
 
 
+}
+
+
+export async function buscaDataChart(userId:string){
+
+  const session = await getServerSession(authOptions)
+      if (!session || !session.user){
+        redirect('/')
+      }
+
+      
 }

@@ -7,7 +7,7 @@ import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 import prismaClient from "@/lib/prisma";
 import { Reports } from "@/components/reports/reports";
-import MyBarChart from "@/components/chart/charts";
+import {MyBarChart} from "@/components/chart/charts";
 
 export default async function Dashboard() {
   const session = await getServerSession(authOptions)
@@ -25,6 +25,7 @@ export default async function Dashboard() {
 
 
 
+  const userId = session.user.id
  
 
   return (
@@ -41,7 +42,7 @@ export default async function Dashboard() {
         </TabsList>
         <TabsContent className="w-full" value="account">
           <TabDashboard/>
-          <MyBarChart/>
+          <MyBarChart userId={userId}/>
         </TabsContent>
         <TabsContent value="reports">
          <Reports customers={customers}/>
