@@ -56,3 +56,76 @@ export async function buscaRelatorio(customer: CustomerProps){
 
      
 }
+
+export interface valuesProps{
+  service: number,
+  product:number
+}
+
+
+export async function buscaValues(userId:string | null) {
+
+  console.log('-----------------------------------cheguei aqui!')
+
+  const session = await getServerSession(authOptions)
+      if (!session || !session.user){
+        redirect('/')
+      }
+
+      const totalValueService = await prismaClient.ticket.findMany({
+        where:{
+          userId: session.user.id
+
+        },
+        select:{
+          serviceprice:true
+        }
+      })
+
+      console.log(totalValueService);
+
+      const totalValue = totalValueService.reduce((acc, ticket) => {
+        return acc + parseFloat(ticket.serviceprice);
+      }, 0);
+
+
+
+ 
+      
+
+      const totalProductService = await prismaClient.ticket.findMany({
+        where:{
+          userId: session.user.id
+
+        },
+        select:{
+        productId:true
+        }
+      })
+
+
+
+
+      const produtosServives = await Promise.all(
+        totalProductService.map(async (ticket) => {
+          const product = ticket.productId ? await prismaClient.product.findFirst({
+        where: {
+          id: ticket.productId 
+        },
+        select: {
+          price: true
+        }
+          }) : null;
+          return product ? parseFloat(product.price) : 0;
+        })
+      );
+
+      const totalProductValue = produtosServives.reduce((acc, price) => acc + price, 0);
+
+      return {
+        service:totalValue,
+        product:totalProductValue
+      };
+
+
+}

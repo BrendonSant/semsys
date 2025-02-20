@@ -1,8 +1,8 @@
 "use client";
 
-import { buscaRelatorio } from "@/app/dashboard/actions";
+import { buscaRelatorio,valuesProps,buscaValues } from "@/app/dashboard/actions";
 import { api } from "@/lib/api";
-import { useQueries } from "@tanstack/react-query";
+import { useQueries, useQuery } from "@tanstack/react-query";
 import { CustomerProps } from "@/util/customer.type";
 import { CardReports } from "../cardreport";
 import { Key } from "lucide-react";
@@ -23,6 +23,18 @@ export function Reports({ customers }: { customers: CustomerProps[] }) {
       enabled: !!customer, // Só executa se houver um ID válido
     })),
   });
+
+  const userId = customers[1].userId;
+
+  const { data: dataValues } = useQuery<valuesProps>({
+    queryKey: ["values_select",userId],
+    queryFn: () => buscaValues(userId),
+    enabled: !!customers, // Só executa a query se `id` for válido
+  });
+
+  
+
+  console.log(dataValues?.product);
 
   
   const numTotalCustomers = customers.length
@@ -47,11 +59,11 @@ export function Reports({ customers }: { customers: CustomerProps[] }) {
           </div>
           <div className="flex justify-between w-full items-center ">
             <CardTitle className=" text-sm lg:text-lg min-w-fit">Total em Serviços:</CardTitle>
-            <CardDescription className=" text-sm lg:text-lg">R$ {numTotalCustomers}</CardDescription>
+            <CardDescription className=" text-sm lg:text-lg">R$ {dataValues?.service}</CardDescription>
           </div>
           <div className="flex justify-between w-full items-center ">
             <CardTitle className=" text-sm lg:text-lg min-w-fit">Total em Produtos:</CardTitle>
-            <CardDescription className=" text-sm lg:text-lg">R$ {numTotalCustomers}</CardDescription>
+            <CardDescription className=" text-sm lg:text-lg">R$ {dataValues?.product}</CardDescription>
           </div>
         </CardContent>
       </Card>
@@ -61,3 +73,5 @@ export function Reports({ customers }: { customers: CustomerProps[] }) {
     </div>
   );
 }
+
+
