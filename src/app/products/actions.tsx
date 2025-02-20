@@ -10,7 +10,7 @@ import { ProductProps } from "@/util/product.type";
 
 
 
-export async function buscarProdutoID(userId: string | null , id:string | null) {
+export async function buscarProdutoID(id: string | null,userId:string | null) {
 
 
 
@@ -37,6 +37,7 @@ export async function buscarProdutoID(userId: string | null , id:string | null) 
 
 export async function editarproduto(data:ProductProps , id:string | null, userId:string | null){
 
+  
 
   try {
     const session = await getServerSession(authOptions);
@@ -47,7 +48,7 @@ export async function editarproduto(data:ProductProps , id:string | null, userId
     }
 
     console.log(data); 
-
+    
     const response = await axios.patch(
       `${process.env.NEXT_PUBLIC_API_URL}/api/product`,
       {

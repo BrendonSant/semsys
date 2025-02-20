@@ -137,14 +137,17 @@ export function ServiForm({
     enabled: !!id, // Só executa a query se `id` for válido
   });
 
+  
 
   useEffect(() => {
    
     
   
-    const productPrice = dataProdutoID ? parseFloat(dataProdutoID.price) : 0;
+    const productPrice = parseFloat(dataProdutoID?.price ?? "0");
     const servicePrice = parseFloat(servicepriceWatch) || 0;
     // Calcula o total
+   
+  
     const totalValue = servicePrice + productPrice;
   
     // Atualiza o campo "total" com o novo valor
