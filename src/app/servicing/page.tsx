@@ -67,15 +67,15 @@ export default async function Servicing() {
       {/* Tabela de serviços */}
       <table className="min-w-full my-2">
         <thead className="my-2 border border-gray-200 h-8">
-          <tr className="text-left">
+          <tr className="text-left w-full">
             <th>Nome</th>
             <th>Cliente</th>
             <th className="hidden lg:table-cell">Data</th>
             <th className="mx-1 hidden lg:table-cell">Valor Serviço</th>
             <th className="mx-1 hidden lg:table-cell">Valor Produto</th>
             <th className="mx-1">Total</th>
-            <th className="hidden lg:inline lg:mx-8">Pagamento</th>
-            <th className="hidden lg:inline lg:mx-8">Status</th>
+            <th className="hidden lg:table-cell">Pagamento</th>
+            <th className="hidden lg:table-cell">Status</th>
             <th className="text-end">Ações</th>
           </tr>
         </thead>
@@ -83,7 +83,7 @@ export default async function Servicing() {
           {services.map((service) => (
             <tr
               key={service.id}
-              className="text-left h-16 border-b-2 border-b-slate-200 last:border-b-0"
+              className="text-left h-16 border-b-2 border-b-slate-200 w-full last:border-b-0"
             >
               <td>{service.name}</td>
               <td>{service.customer?.name}</td>
@@ -94,9 +94,9 @@ export default async function Servicing() {
               </td>
               <td className="hidden lg:table-cell">{service.serviceprice}</td>
               <td className="hidden lg:table-cell">{service.product?.price}</td>
-              <td className="mx-1">{service.total}</td>
-              <td className="hidden lg:table-cell lg:mx-8">{service.payment}</td>
-              <td className="hidden lg:table-cell lg:mx-8">
+              <td >{service.total}</td>
+              <td className="hidden lg:table-cell">{service.payment}</td>
+              <td className="hidden lg:table-cell">
                 {service.status === "Realizado" && (
                   <span
                     className="w-3 h-3 rounded-full bg-green-500 inline-block mr-1"

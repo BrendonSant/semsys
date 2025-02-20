@@ -94,11 +94,7 @@ export async function POST(request: Request) {
 export async function PATCH(request: Request) {
     const session = await getServerSession(authOptions);
 
-    if (!session || !session.user) {
-        return NextResponse.json({ error: 'Unauthorized' }, {
-            status: 401
-        });
-    }
+    
 
     const { id, name, price, description, userId } = await request.json();
 

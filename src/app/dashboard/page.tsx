@@ -1,10 +1,12 @@
 import { Container } from "@/components/container";
 import { TabDashboard } from "@/components/dashboard";
-import { Reports } from "@/components/reports";
+
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { authOptions } from "@/lib/auth";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
+import prismaClient from "@/lib/prisma";
+import { Reports } from "@/components/reports/reports";
 
 export default async function Dashboard() {
   const session = await getServerSession(authOptions)
@@ -12,7 +14,18 @@ export default async function Dashboard() {
     redirect('/')
   }
 
-  
+ 
+
+  const customers = await prismaClient.customer.findMany({
+    where: {
+      userId: session.user.id
+    }
+  });
+
+
+
+ 
+
   return (
     <Container>
       <div className="flex w-full mt-10 mb-6">
@@ -29,7 +42,7 @@ export default async function Dashboard() {
           <TabDashboard/>
         </TabsContent>
         <TabsContent value="reports">
-          <Reports/>
+         <Reports customers={customers}/>
         </TabsContent>
       </Tabs>
     </Container>

@@ -54,6 +54,8 @@ export function NewCustomerForm({
     enabled: !!id, // Só executa a query se `id` for válido
   });
 
+ 
+
   const customer = useForm<CustomerProps>({
     defaultValues: {
       id: "",
