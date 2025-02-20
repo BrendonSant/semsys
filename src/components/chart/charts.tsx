@@ -1,99 +1,94 @@
-import React from 'react';
-import { Bar } from 'react-chartjs-2';
+"use client";
+
+import React from "react";
 import {
   Chart as ChartJS,
   CategoryScale,
   LinearScale,
+  PointElement,
   BarElement,
   Title,
   Tooltip,
   Legend,
-} from 'chart.js';
-import { ServiceProps } from '@/util/servicing.type'; // Ajuste o caminho conforme necessário
+  Filler,
+} from "chart.js";
+import { Bar } from "react-chartjs-2";
 
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/lib/auth";
-import { redirect } from "next/navigation";
-import prismaClient from "@/lib/prisma";
-
-// Registra os componentes necessários do Chart.js
-ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
-
-// Define as propriedades que o componente receberá
-interface ServiceChartProps {
-  services: ServiceProps[];
-}
-
-export async function ServiceChart() {
-
-    const session = await getServerSession(authOptions);
-
-    if (!session || !session.user) {
-      redirect("/");
-    }
-  
-
-  const services = await prismaClient.ticket.findMany({
-    where:{
-      userId: session.user.id
-    }
-  })
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+  Filler
+);
 
 
-  const statuses: ServiceProps['status'][] = [
-    'Realizado',
-    'Parado',
-    'Executando',
-    'Não iniciado',
-  ];
 
-  // Calcula a quantidade de serviços para cada status
-  const counts = statuses.map((status) =>
-    services.filter((service) => service.status === status).length
-  );
 
-  // Configuração dos dados para o gráfico
+
+
+const MyBarChart = () => {
+  const labels = ["Não iniciado", "Executando", "Parado", "Realizado"];
+  const datasets = [12, 45, 10, 43];
   const data = {
-    labels: statuses,
+    labels: labels,
     datasets: [
       {
-        label: 'Quantidade de Serviços',
-        data: counts,
+        // Title of Graph
+        label: "Relação de status de serviços",
+        data: datasets,
         backgroundColor: [
-          'rgba(75, 192, 192, 0.6)', // Realizado
-          'rgba(255, 99, 132, 0.6)', // Parado
-          'rgba(255, 206, 86, 0.6)', // Executando
-          'rgba(54, 162, 235, 0.6)', // Não iniciado
+          "rgba(201, 203, 207, 0.2)",
+          "rgba(1, 150, 250, 0.2)",
+          "rgba(255, 99, 132, 0.2)",
+          "rgba(100, 162, 235, 0.2)",
         ],
         borderColor: [
-          'rgba(75, 192, 192, 1)',
-          'rgba(255, 99, 132, 1)',
-          'rgba(255, 206, 86, 1)',
-          'rgba(54, 162, 235, 1)',
+          "rgb(201, 203, 207)",
+          "rgb(1, 150, 250)",
+          "rgba(255, 99, 132)",
+          "rgb(100, 162, 235)",
         ],
         borderWidth: 1,
+        barPercentage: 1,
+        borderRadius: {
+          topLeft: 5,
+          topRight: 5,
+        },
       },
+      // insert similar in dataset object for making multi bar chart
     ],
   };
-
-  // Configuração das opções do gráfico
   const options = {
-    responsive: true,
-    plugins: {
-      legend: {
-        position: 'top' as const,
-      },
-      title: {
+    scales: {
+      y: {
+        title: {
+          display: true,
+          text: "número de serviços",
+        },
         display: true,
-        text: 'Distribuição de Status dos Serviços',
+        beginAtZero: true,
+        max: 100,
+      },
+      x: {
+        title: {
+          display: true,
+          text: "status de serviços",
+        },
+        display: true,
       },
     },
   };
-
   return (
-    <div style={{ maxWidth: '600px', margin: '0 auto' }}>
-      <Bar data={data} options={options} />
+    <div className="flex w-full justify-center md:justify-start items-center px-4">
+      <div className="h-[400px] w-full lg:w-1/2 md:h-[500px] mt-8">
+        <Bar data={data} options={options} />
+      </div>
     </div>
   );
 };
 
+export default MyBarChart;
