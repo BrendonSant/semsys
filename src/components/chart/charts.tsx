@@ -37,11 +37,11 @@ import { buscaDataChart } from "@/app/dashboard/actions";
 export function MyBarChart({userId}:{userId : string})  {
 
 
-  const { data: dataChart } = useQuery({
-      queryKey: ["busca_clientes", userId],
-      queryFn: () => buscaDataChart(userId),
-      enabled: !!useId, // Só executa a query se `id` for válido
-    });
+  // const { data: dataChart } = useQuery({
+  //     queryKey: ["busca_clientes", userId],
+  //     queryFn: () => buscaDataChart(userId),
+  //     enabled: !!useId, // Só executa a query se `id` for válido
+  //   });
 
 
     
