@@ -139,5 +139,53 @@ export async function buscaDataChart(userId:string){
         redirect('/')
       }
 
+      const NIservices = await prismaClient.ticket.findMany({
+        where:{
+          userId: userId,
+          status: 'Não iniciado'
+        },
+        select:{
+          id:true
+        }
+      })
+
+      const Eservices = await prismaClient.ticket.findMany({
+        where:{
+          userId: userId,
+          status: 'Executando'
+        },
+        select:{
+          id:true
+        }
+      })
+
+      const Pservices = await prismaClient.ticket.findMany({
+        where:{
+          userId: userId,
+          status: 'Parado'
+        },
+        select:{
+          id:true
+        }
+      })
+
+      const Rservices = await prismaClient.ticket.findMany({
+        where:{
+          userId: userId,
+          status: 'Realizado'
+        },
+        select:{
+          id:true
+        }
+      })
+
+      const quantNiservices = NIservices.length;
+      const quantEservices = Eservices.length;
+      const quantPservices = Pservices.length;
+      const quantRservices = Rservices.length;
+
+      const total = [quantNiservices, quantEservices,quantPservices,quantRservices];
+
+      return total ;
       
 }
