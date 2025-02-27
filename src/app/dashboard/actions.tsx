@@ -184,8 +184,27 @@ export async function buscaDataChart(userId:string){
       const quantPservices = Pservices.length;
       const quantRservices = Rservices.length;
 
-      const total = [quantNiservices, quantEservices,quantPservices,quantRservices];
+      const totalconta = [quantNiservices, quantEservices,quantPservices,quantRservices];
 
-      return total ;
       
+
+      const conta = await prismaClient.ticket.findMany({
+        where:{
+          userId: userId,
+    
+        },
+        select:{
+          id: true
+        }
+      })
+    
+      const total = conta.reduce((acc, ticket) => acc + Object.keys(ticket).length, 0);
+      console.log(total);
+    
+      return {
+        totalc:totalconta,
+        total: total
+      } ;
 }
+
+

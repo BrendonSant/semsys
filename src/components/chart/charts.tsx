@@ -26,7 +26,7 @@ ChartJS.register(
 );
 
 import {useQuery, useQueryClient } from "@tanstack/react-query";
-import { buscaDataChart } from "@/app/dashboard/actions";
+import { buscaDataChart} from "@/app/dashboard/actions";
 
 
 
@@ -40,9 +40,12 @@ export function MyBarChart({userId}:{userId : string})  {
   const { data: dataChart } = useQuery({
       queryKey: ["buscar_chart_servicos", userId],
       queryFn: () => buscaDataChart(userId),
-      enabled: !!useId, // Só executa a query se `id` for válido
+      enabled: !!userId, // Só executa a query se `id` for válido
     });
 
+
+
+   
 
 
 
@@ -59,7 +62,7 @@ export function MyBarChart({userId}:{userId : string})  {
       {
         // Title of Graph
         label: "Relação de status de serviços",
-        data: datasets,
+        data: datasets?.totalc,
         backgroundColor: [
           "rgba(201, 203, 207, 0.2)",
           "rgba(1, 150, 250, 0.2)",
@@ -91,7 +94,7 @@ export function MyBarChart({userId}:{userId : string})  {
         },
         display: true,
         beginAtZero: true,
-        max: 100,
+        max: datasets?.total,
       },
       x: {
         title: {
